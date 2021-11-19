@@ -11,11 +11,11 @@ axios
     key: process.env.API_KEY,
   })
   .then((result) => console.log(result.data))
-  .catch((error) => {
+  .catch((error) =>
     console.error(
       `The request failed with the status code ${error.response.status}`
-    );
-  });
+    )
+  );
 
 // Example with async/await
 const unique_pii_markers = async () => {
