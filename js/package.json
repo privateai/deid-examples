@@ -1,0 +1,17 @@
+{
+  "name": "js-examples",
+  "version": "1.0.0",
+  "description": "Example scripts to make call to the deid docker container",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
+}
