@@ -1,12 +1,12 @@
-# Example script to illustrate how to make API calls to the Private AI Docker
-# container to deidentify a text using the batching feature.
+# Example script to illustrate how to make API calls to the Private AI Demo
+# Server to deidentify text.
 #
 # To use this script, please start the Docker container locally, as per the
 # instructions at https://private-ai.com/docs/installation.
 #
 # In order to use the API key issued by Private AI, you can run the script as
-# `API_KEY=<your key here> python batching.py` or you can define a `.env` file
-# which has the line`API_KEY=<your key here>`.
+# `API_KEY=<your key here> python private_ai_demo_server.py` or you can define a
+# `.env` file which has the line`API_KEY=<your key here>`.
 import os
 import pprint
 
