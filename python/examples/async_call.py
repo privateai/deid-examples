@@ -40,6 +40,7 @@ async def async_aiohttp_call() -> None:
             pprint.pprint(await response.json())
 
 
+# Turn synchronous post call from the requests library to an asynchronous call.
 async def async_post(
     url: str,
     json: Dict[str, str]
