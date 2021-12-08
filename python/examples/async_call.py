@@ -60,13 +60,11 @@ async def async_requests_call() -> None:
         }
     )
 
-    # check for errors
-    if response.ok:
-        pprint.pprint(response.json())
-    else:
-        raise Exception(
-            f"The request failed with the status code {response.status_code}"
-        )
+    # check if the request was successful
+    response.raise_for_status()
+
+    # print the result in a readable way
+    pprint.pprint(response.json())
 
 
 if __name__ == "__main__":
