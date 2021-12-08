@@ -28,12 +28,12 @@ dotenv.load_dotenv()
 # define the function that will make the POST request and print the result
 def make_request(url: str, json: Dict[str, str]) -> Dict[str, str]:
     response = requests.post(url=url, json=json)
-    if response.ok:
-        return response.json()
-    else:
-        raise Exception(
-            f"The request failed with the status code {response.status_code}"
-        )
+
+    # check if the request was successful
+    response.raise_for_status()
+
+    # return the body of the response
+    return response.json()
 
 
 # function that pretty prints the response
