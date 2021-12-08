@@ -28,10 +28,8 @@ response = requests.post(
     }
 )
 
-# Check if the HTTP request was successful
-if response.ok:
-    pprint.pprint(response.json())
-else:
-    raise Exception(
-        f"The request failed with status code {response.status_code}"
-    )
+# check if the request was successful
+response.raise_for_status()
+
+# print the result in a readable way
+pprint.pprint(response.json())
