@@ -16,12 +16,8 @@ import aiohttp
 import requests
 import dotenv
 
-# Use to load the API key for authentication
-dotenv.load_dotenv()
 
 # Define an asynchronous function using the aiohttp library.
-
-
 async def async_aiohttp_call() -> None:
 
     # create an asynchronous aiohttp client session
@@ -32,7 +28,7 @@ async def async_aiohttp_call() -> None:
             url="http://localhost:8080/deidentify_text",
             json={
                 "text": "My name is John and my friend is Grace.",
-                "key": os.getenv("API_KEY", "")
+                "key": os.environ["API_KEY"]
             }
         ) as response:
 
@@ -56,7 +52,7 @@ async def async_requests_call() -> None:
         url="http://localhost:8080/deidentify_text",
         json={
             "text": "My name is John and my friend is Grace.",
-            "key": os.getenv("API_KEY", "")
+            "key": os.environ["API_KEY"]
         }
     )
 
@@ -68,5 +64,14 @@ async def async_requests_call() -> None:
 
 
 if __name__ == "__main__":
+    
+    # Use to load the API key for authentication
+    dotenv.load_dotenv()
+    
+    # Check if the API_KEY environment variable is set
+    if "API_KEY" not in os.environ:
+        raise KeyError("API_KEY must be defined in order to run the examples.")
+
+    # Run the examples
     asyncio.run(async_aiohttp_call())
     asyncio.run(async_requests_call())

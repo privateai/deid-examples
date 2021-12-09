@@ -16,12 +16,16 @@ import dotenv
 # Use to load API KEY for authentication
 dotenv.load_dotenv()
 
+# Check if API_KEY environment variable is defined
+if "API_KEY" not in os.environ:
+    raise KeyError("API_KEY must be defined in order to run the examples.")
+
 # Make the POST request to the docker container
 response = requests.post(
     url="http://localhost:8080/deidentify_text",
     json={
         "text": "My name is John and my friend is Grace and we live in Barcelona",
-        "key": os.getenv("API_KEY", ""),
+        "key": os.environ["API_KEY"],
         "enabled_classes": ["AGE", "LOCATION"]
     }
 )

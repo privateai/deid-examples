@@ -21,10 +21,6 @@ from typing import Dict, List
 import requests
 import dotenv
 
-# Use to load API KEY for authentication
-dotenv.load_dotenv()
-
-
 # define the function that will make the POST request and print the result
 def make_request(url: str, json: Dict[str, str]) -> Dict[str, str]:
     response = requests.post(url=url, json=json)
@@ -62,7 +58,7 @@ def threading_example() -> None:
             "url": "http://localhost:8080/deidentify_text",
             "json": {
                 "text": "My name is John and my friend is Grace.",
-                "key": os.getenv("API_KEY", "")
+                "key": os.environ["API_KEY"]
             }
         }
     )
@@ -89,7 +85,7 @@ def threading_example_with_return() -> None:
             "url": "http://localhost:8080/deidentify_text",
             "json": {
                 "text": "My name is John and my friend is Grace.",
-                "key": os.getenv("API_KEY", "")
+                "key": os.environ["API_KEY"]
             },
             "response": response
         }
@@ -115,7 +111,7 @@ def concurrent_thread_pool_example() -> None:
             url="http://localhost:8080/deidentify_text",
             json={
                 "text": "My name is John and my friend is Grace.",
-                "key": os.getenv("API_KEY", "")
+                "key": os.environ["API_KEY"]
             }
         )]
 
@@ -133,7 +129,7 @@ def concurrent_process_pool_example() -> None:
             url="http://localhost:8080/deidentify_text",
             json={
                 "text": "My name is John and my friend is Grace.",
-                "key": os.getenv("API_KEY", "")
+                "key": os.environ["API_KEY"]
             }
         )]
 
@@ -142,6 +138,14 @@ def concurrent_process_pool_example() -> None:
 
 
 if __name__ == "__main__":
+    
+    # Use to load API KEY for authentication
+    dotenv.load_dotenv()
+
+    # Check if API_KEY environment variable is defined
+    if "API_KEY" not in os.environ:
+        raise KeyError("API_KEY must be defined in order to run the examples.")
+
     print("\nConcurrency example using the threading library:")
     threading_example()
     print(
