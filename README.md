@@ -6,4 +6,4 @@ For further information & access to the container feel free to [contact us](http
 # Setup
 Private AI's service is primarily delivered via a self-hosted container. Setup instructions can be found [here](https://docs.private-ai.com/docs/installation/).
 
-It is also possible to use the Private AI cloud endpoint located at https://api.private-ai.com/deid/v1/deidentify_text
+It is also possible to use the Private AI cloud endpoint located at [https://api.private-ai.com/deid/v1/deidentify_text](https://api.private-ai.com/deid/v1/deidentify_text).
