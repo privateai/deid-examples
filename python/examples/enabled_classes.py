@@ -7,31 +7,27 @@
 # In order to use the API key issued by Private AI, you can run the script as
 # `API_KEY=<your key here> python enabled_classes.py` or you can define a `.env`
 # file which has the line`API_KEY=<your key here>`.
+
 import os
-import pprint
-
-import requests
 import dotenv
+from privateai_client import PAIClient, request_objects
 
-# Use to load API KEY for authentication
+# Use to load the API KEY for authentication
 dotenv.load_dotenv()
 
-# Check if API_KEY environment variable is defined
-if "API_KEY" not in os.environ:
-    raise KeyError("API_KEY must be defined in order to run the examples.")
+# On initialization
+client = PAIClient("http", "localhost", "8080", api_key=os.environ["API_KEY"])
 
-# Make the POST request to the docker container
-response = requests.post(
-    url="http://localhost:8080/deidentify_text",
-    json={
-        "text": "My name is John and my friend is Grace and we live in Barcelona",
-        "key": os.environ["API_KEY"],
-        "enabled_classes": ["AGE", "LOCATION"]
-    }
-)
+sample_text = "My name is John and my friend is Grace and we live in Barcelona."
+# Create the nested request objects
+sample_entity_type_selector = request_objects.entity_type_selector_obj(
+    type="ENABLE", value=["NAME", "LOCATION"])
+sample_entity_detection = request_objects.entity_detection_obj(
+    entity_types=[sample_entity_type_selector])
 
-# check if the request was successful
-response.raise_for_status()
+# Create the request object
+process_text_request = request_objects.process_text_obj(
+    text=[sample_text], entity_detection=sample_entity_detection)
 
-# print the result in a readable way
-pprint.pprint(response.json())
+response = client.process_text(process_text_request)
+print(response.processed_text)
