@@ -6,7 +6,7 @@
  * instructions at https://private-ai.com/docs/installation.
  *
  * In order to use the API key issued by Private AI, you can run the script as
- * `API_KEY=<your key here> node unique_pii_markers.js` or you can define a `.env`
+ * `API_KEY=<your key here> node masked_pii_markers.js` or you can define a `.env`
  * file which has the line `API_KEY=<your key here>`.
  */
 const axios = require("axios");
@@ -27,8 +27,8 @@ axios
         return_entity: true,
       },
       processed_text: {
-        type: "MARKER",
-        pattern: "[UNIQUE_NUMBERED_ENTITY_TYPE]",
+        type: "MASK",
+        mask_character: "#",
       },
     },
     {
@@ -46,7 +46,7 @@ axios
   );
 
 // Example with async/await
-const unique_pii_markers = async () => {
+const masked_pii_markers = async () => {
   try {
     const result = await axios.post(
       "http://localhost:8080/v3/process/text",
@@ -60,8 +60,8 @@ const unique_pii_markers = async () => {
           return_entity: true,
         },
         processed_text: {
-          type: "MARKER",
-          pattern: "[UNIQUE_NUMBERED_ENTITY_TYPE]",
+          type: "MASK",
+          mask_character: "#",
         },
       },
       {
@@ -81,4 +81,4 @@ const unique_pii_markers = async () => {
   }
 };
 
-unique_pii_markers();
+masked_pii_markers();

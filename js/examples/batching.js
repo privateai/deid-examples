@@ -17,10 +17,32 @@ dotenv.config();
 
 // Example without async/await
 axios
-  .post("http://localhost:8080/deidentify_text", {
-    text: ["My password is: 4XDX63F8O1", "My password is: 33LMVLLDHNasdfsda"],
-    key: process.env.API_KEY,
-  })
+  .post(
+    "http://localhost:8080/v3/process/text",
+    {
+      text: [
+        "Hi, my name is Penelope, could you tell me your phone number please?",
+        "Sure, x234",
+        "and your DOB please?",
+        "fourth of Feb nineteen 86",
+      ],
+      link_batch: true,
+      entity_detection: {
+        accuracy: "high",
+        return_entity: true,
+      },
+      processed_text: {
+        type: "MARKER",
+        pattern: "[UNIQUE_NUMBERED_ENTITY_TYPE]",
+      },
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": process.env.API_KEY,
+      },
+    }
+  )
   .then((result) => console.log(result.data))
   .catch((error) =>
     console.error(
@@ -31,11 +53,36 @@ axios
 // Example with async/await
 const batching = async () => {
   try {
-    const result = await axios.post("http://localhost:8080/deidentify_text", {
-      text: ["My password is: 4XDX63F8O1", "My password is: 33LMVLLDHNasdfsd"],
-      key: process.env.API_KEY,
-    });
-    console.log(result.data);
+    const result = await axios.post(
+      "http://localhost:8080/v3/process/text",
+      {
+        text: [
+          "Hi, my name is Penelope, could you tell me your phone number please?",
+          "Sure, x234",
+          "and your DOB please?",
+          "fourth of Feb nineteen 86",
+        ],
+        link_batch: true,
+        entity_detection: {
+          accuracy: "high",
+          return_entity: true,
+        },
+        processed_text: {
+          type: "MARKER",
+          pattern: "[UNIQUE_NUMBERED_ENTITY_TYPE]",
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": process.env.API_KEY,
+        },
+      }
+    );
+
+    const { data } = result;
+
+    console.log(data);
   } catch (error) {
     console.error(
       `The request failed with the status code ${error.response.status}`

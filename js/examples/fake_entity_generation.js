@@ -17,11 +17,28 @@ dotenv.config();
 
 // Example without async/await
 axios
-  .post("http://localhost:8080/deidentify_text", {
-    text: "My name is John and my friend is Grace and we live in Barcelona",
-    key: process.env.API_KEY,
-    fake_entity_accuracy_mode: "standard",
-  })
+  .post(
+    "http://localhost:8080/v3/process/text",
+    {
+      text: ["My name is John and my friend is Grace and we live in Barcelona"],
+      link_batch: false,
+      entity_detection: {
+        accuracy: "high",
+        return_entity: true,
+      },
+      processed_text: {
+        type: "SYNTHETIC",
+        synthetic_entity_accuracy: "standard",
+        preserve_relationships: true,
+      },
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": process.env.API_KEY,
+      },
+    }
+  )
   .then((result) => console.log(result.data))
   .catch((error) =>
     console.error(
@@ -32,12 +49,34 @@ axios
 // Example with async/await
 const fake_entity_generation = async () => {
   try {
-    const result = await axios.post("http://localhost:8080/deidentify_text", {
-      text: "My name is John and my friend is Grace and we live in Barcelona",
-      key: process.env.API_KEY,
-      fake_entity_accuracy_mode: "standard",
-    });
-    console.log(result.data);
+    const result = await axios.post(
+      "http://localhost:8080/v3/process/text",
+      {
+        text: [
+          "My name is John and my friend is Grace and we live in Barcelona",
+        ],
+        link_batch: false,
+        entity_detection: {
+          accuracy: "high",
+          return_entity: true,
+        },
+        processed_text: {
+          type: "SYNTHETIC",
+          synthetic_entity_accuracy: "standard",
+          preserve_relationships: true,
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": process.env.API_KEY,
+        },
+      }
+    );
+
+    const { data } = result;
+
+    console.log(data);
   } catch (error) {
     console.error(
       `The request failed with the status code ${error.response.status}`
