@@ -1,12 +1,12 @@
 /**
  * Example script to illustrate how to make API calls to the Private AI Docker
- * container to deidentify text using the unique PII markers feature (default).
+ * container to deidentify text using the enabled classes feature.
  *
  * To use this script, please start the Docker container locally, as per the
  * instructions at https://private-ai.com/docs/installation.
  *
  * In order to use the API key issued by Private AI, you can run the script as
- * `API_KEY=<your key here> node unique_pii_markers.js` or you can define a `.env`
+ * `API_KEY=<your key here> node process_file.js` or you can define a `.env`
  * file which has the line `API_KEY=<your key here>`.
  */
 const axios = require("axios");
@@ -18,17 +18,17 @@ dotenv.config();
 // Example without async/await
 axios
   .post(
-    "http://localhost:8080/v3/process/text",
+    "http://localhost:8080/v3/process/files/uri",
     {
-      text: ["My name is John and my friend is Grace and we live in Barcelona"],
-      link_batch: false,
+      uri: "https://example.com/example-image.jpeg",
       entity_detection: {
         accuracy: "high",
         return_entity: true,
       },
-      processed_text: {
-        type: "MARKER",
-        pattern: "[UNIQUE_NUMBERED_ENTITY_TYPE]",
+      pdf_options: { density: 150 },
+      audio_options: {
+        bleep_start_padding: 0,
+        bleep_end_padding: 0,
       },
     },
     {
@@ -45,23 +45,20 @@ axios
     )
   );
 
-// Example with async/await
-const unique_pii_markers = async () => {
+const process_file_uri = async () => {
   try {
     const result = await axios.post(
-      "http://localhost:8080/v3/process/text",
+      "http://localhost:8080/v3/process/files/uri",
       {
-        text: [
-          "My name is John and my friend is Grace and we live in Barcelona",
-        ],
-        link_batch: false,
+        uri: "https://example.com/example-image.jpeg",
         entity_detection: {
           accuracy: "high",
           return_entity: true,
         },
-        processed_text: {
-          type: "MARKER",
-          pattern: "[UNIQUE_NUMBERED_ENTITY_TYPE]",
+        pdf_options: { density: 150 },
+        audio_options: {
+          bleep_start_padding: 0,
+          bleep_end_padding: 0,
         },
       },
       {
@@ -71,6 +68,7 @@ const unique_pii_markers = async () => {
         },
       }
     );
+
     const { data } = result;
 
     console.log(data);
@@ -81,4 +79,4 @@ const unique_pii_markers = async () => {
   }
 };
 
-unique_pii_markers();
+process_file_uri();

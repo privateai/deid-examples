@@ -7,30 +7,27 @@
 # In order to use the API key issued by Private AI, you can run the script as
 # `API_KEY=<your key here> python unique_pii_markers.py` or you can define a
 # `.env` file which has the line`API_KEY=<your key here>`.
-import os
-import pprint
 
-import requests
+import os
 import dotenv
+from privateai_client import PAIClient, request_objects
 
 # Use to load the API KEY for authentication
 dotenv.load_dotenv()
 
-# Check if API_KEY environment variable is defined
-if "API_KEY" not in os.environ:
-    raise KeyError("API_KEY must be defined in order to run the examples.")
+# On initialization
+client = PAIClient("http", "localhost", "8080", api_key=os.environ["API_KEY"])
 
-# Make the POST request to the container
-response = requests.post(
-    url="http://localhost:8080/deidentify_text",
-    json={
-        "text": "My name is John and my friend is Grace",
-        "key": os.environ["API_KEY"]
-    }
+entity_detection_obj = request_objects.entity_detection_obj(
+    accuracy="high", return_entity=True)
+processed_text_obj = request_objects.processed_text_obj(type="MARKER")
+
+process_text_request = request_objects.process_text_obj(
+    text=["My name is John and my friend is Grace and we live in Barcelona",],
+    link_batch=False,
+    entity_detection=entity_detection_obj,
+    processed_text=processed_text_obj
 )
 
-# check if the request was successful
-response.raise_for_status()
-
-# print the result in a readable way
-pprint.pprint(response.json())
+response = client.process_text(process_text_request)
+print(response.processed_text)
