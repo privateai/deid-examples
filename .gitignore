@@ -130,4 +130,4 @@ dmypy.json
 
 # Code Editor
 .vscode
-.idea
+.idea.DS_Store
