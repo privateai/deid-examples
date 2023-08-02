@@ -1,4 +1,4 @@
 python-dotenv==0.19.2
 requests==2.26.0
 aiohttp==3.8.1
-privateai-client==1.2.0
+privateai-client==1.3.0
