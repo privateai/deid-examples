@@ -1,8 +1,4 @@
-#####################################################################################
-#####################################################################################
-################# USAGE: python secure_prompt.py -m <openai,vertexai,cohere> ########
-#####################################################################################
-#####################################################################################
+
 from privateai_client import PAIClient
 from privateai_client import request_objects
 import openai
@@ -16,16 +12,14 @@ parser = argparse.ArgumentParser(description="A Python script with a model param
 parser.add_argument("-m", "--model", required=True, help="Specify the model to use.")
 args = parser.parse_args()
 
-PRIVATEAI_API_KEY = demo_config.privateai["API_KEY"]
-PRIVATEAI_URL = demo_config.privateai["STAGING_URL"]
-
 # Initialize the openai client
 openai.api_key = demo_config.openai["API_KEY"]
 
 # initialize the privateai client
 PRIVATEAI_SCHEME = 'https'
-client = PAIClient(PRIVATEAI_SCHEME, PRIVATEAI_URL)
-client.add_api_key(PRIVATEAI_API_KEY)
+PRIVATEAI_HOST =  demo_config.privateai["PROD_URL"] 
+client = PAIClient(PRIVATEAI_SCHEME, PRIVATEAI_HOST)
+client.add_api_key(demo_config.privateai["PROD_KEY"])
 
 ############ Vertex AI Config ##########
 import vertexai
@@ -78,7 +72,6 @@ def prompt_cohere(prompt):
       stop_sequences=[],
       return_likelihoods='NONE')
     return response.generations[0].text
-
 
 def private_prompt(prompt, raw_text, model):
     completions = {} # a dict that maintains the history of the raw data, redaction, and completions
@@ -151,7 +144,7 @@ In a parallel criminal action, the New Jersey Office of the Attorney General Div
 """
 
 completions = private_prompt("summarize this: ", raw_sample_text, args.model)
-print("\n*********** REDACTED COMPLETIONS ***************\n")
 print(completions['redacted_completion'])
-print("\n*********** RE-IDENTIFIED COMPLETIONS ***************\n")
+print("\n**************************\n")
 print(completions['reidentified_completion'])
+print(json.dumps(completions))
