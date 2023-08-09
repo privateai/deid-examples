@@ -1,6 +1,5 @@
 from privateai_client import PAIClient
 from privateai_client import request_objects
-# from ~/Users/michaelyoung/Dev/pai-thin-client/src.privateai_client import PAIClient, request_objects
 import openai
 import sys
 import demo_config
@@ -10,7 +9,7 @@ import base64
 import os
 
 # Initialize parser
-parser = argparse.ArgumentParser(description="A Python script with a model parameter.")
+parser = argparse.ArgumentParser(description="Secure LLM prompting from a file")
 parser.add_argument("-d", "--directory", required=True, help="directory")
 parser.add_argument("-f", "--file", required=True, help="File to redact")
 parser.add_argument("-t", "--filetype", required=True, help="file type")
@@ -25,7 +24,6 @@ openai.api_key = demo_config.openai["API_KEY"]
 
 file_dir = args.directory 
 file_name = args.filename 
-file_type = args.filetype
 filepath = args.file 
 file_type= args.filetype.split("/")[1] 
 PRIVATEAI_SCHEME = 'https'
