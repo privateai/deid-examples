@@ -74,6 +74,10 @@ docs/_build/
 # PyBuilder
 target/
 
+# Demo config
+
+/demo_config.py
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
@@ -132,3 +136,4 @@ dmypy.json
 .vscode
 .idea
 .DS_Store
+
