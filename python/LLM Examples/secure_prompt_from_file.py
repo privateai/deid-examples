@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(description="Secure LLM prompting from a file")
 parser.add_argument("-d", "--directory", required=True, help="directory")
 parser.add_argument("-f", "--file", required=True, help="File to redact")
 parser.add_argument("-t", "--filetype", required=True, help="file type")
-parser.add_argument("-n", "--filename", required=True, help="file type")
+parser.add_argument("-n", "--filename", required=True, help="file name")
 args = parser.parse_args()
 
 PRIVATEAI_API_KEY = demo_config.privateai["PROD_KEY"]
