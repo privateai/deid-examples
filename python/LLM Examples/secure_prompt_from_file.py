@@ -5,7 +5,7 @@ import os
 import sys
 
 import demo_config
-from openai import OpenAIClient
+from openai import OpenAI
 from privateai_client import PAIClient, request_objects
 
 # Initialize parser
@@ -20,7 +20,7 @@ PRIVATEAI_API_KEY = demo_config.privateai["PROD_KEY"]
 PRIVATEAI_URL = demo_config.privateai["PROD_URL"]
 
 # Initialize the openai client
-openai_client = OpenAIClient(api_key=demo_config.openai["API_KEY"])
+openai_client = OpenAI(api_key=demo_config.openai["API_KEY"])
 
 file_dir = args.directory
 file_name = args.filename

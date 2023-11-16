@@ -3,7 +3,7 @@ import json
 import sys
 
 import demo_config
-from openai import OpenAIClient
+from openai import OpenAI
 from privateai_client import PAIClient, request_objects
 
 # Initialize parser
@@ -12,7 +12,7 @@ parser.add_argument("-m", "--model", required=True, help="Specify the model to u
 args = parser.parse_args()
 
 # Initialize the openai client
-openai_client = OpenAIClient(api_key=demo_config.openai["API_KEY"])
+openai_client = OpenAI(api_key=demo_config.openai["API_KEY"])
 
 # initialize the privateai client
 PRIVATEAI_SCHEME = "https"
