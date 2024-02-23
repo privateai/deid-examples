@@ -1,3 +1,3 @@
-privateai-client==3.5.0
+privateai-client
 openai==1.2.4
 dotenv
