@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "d6a01cc7-e2b6-4b2e-a6d0-40d4ad78bc6a",
+		"name": "Private AI Cookbook",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30659417"
+	},
+	"item": [
+		{
+			"name": "1 - Simple Example",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n        \"Case info. Good afternoon. Thank you for calling the Georgia Division of Transportation. My name is miss Johanna, and it is a pleasure assisting you today. For security reasons, may I please have either your Social Security number or your case number? 614-5555 01. Thank you so much. Could you please verify your name, your date of birth, and the name of the other parent on the case you are calling for? Jiminy Cricket. 12345. I am Bob Douglas. Thank you, ma am. And lastly, could you please verify your address, phone number, and email? 123 Fake St, Atlanta, Georgia 40234, You said my phone number? Phone number and email, please. 555-666-7777@bob.douglas@gmail.com. Alright, ma am. Thank you so much for verifying that information today.\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - Simple Mask Example",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n        \"Case info. Good afternoon. Thank you for calling the Georgia Division of Transportation. My name is miss Johanna, and it is a pleasure assisting you today. For security reasons, may I please have either your Social Security number or your case number? 614-5555 01. Thank you so much. Could you please verify your name, your date of birth, and the name of the other parent on the case you are calling for? Jiminy Cricket. 12345. I am Bob Douglas. Thank you, ma am. And lastly, could you please verify your address, phone number, and email? 123 Fake St, Atlanta, Georgia 40234, You said my phone number? Phone number and email, please. 555-666-7777@bob.douglas@gmail.com. Alright, ma am. Thank you so much for verifying that information today.\"\n    ],\n    \"processed_text\": {\n      \"type\": \"MASK\",\n      \"mask_character\": \"#\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - Selective Redaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n        \"I’ll need a ticket for tonight for a trip on the seventh to the ninth. I don’t really care what class I’m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It’s 0134879. What’s that? No um it’s not American, it’s Bahraini. Yeah. And the last name- well the last name I’m not sure about. We just have a name field on our passports, it doesn’t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it’s just the remainder. Aw that sucks. Well a hundred and forty bucks isn’t bad. Anyway it’ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"entity_types\": [\n            {\n                \"type\": \"ENABLE\",\n                \"value\": [\n                    \"GDPR\",\n                    \"LOCATION\"\n                ]\n            }\n        ]\n    }\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4- Easy Regulation Enablement",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n        \"I’ll need a ticket for tonight for a trip on the seventh to the ninth. I don’t really care what class I’m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It’s 0134879. What’s that? No um it’s not American, it’s Bahraini. Yeah. And the last name- well the last name I’m not sure about. We just have a name field on our passports, it doesn’t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it’s just the remainder. Aw that sucks. Well a hundred and forty bucks isn’t bad. Anyway it’ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"entity_types\": [\n            {\n                \"type\": \"ENABLE\",\n                \"value\": [\n                    \"GDPR\",\n                    \"LOCATION\"\n                ]\n            }\n        ]\n    }\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 - Multi Lingual",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n        \"اسمي مايك يونغ، عمري 45 عامًا، ولدت في طهران\",\n        \"Numele meu este Mike Young, am 45 de ani și m-am născut în Teheran\"\n    ],\n    \"entity_detection\": {\"accuracy\":\"high_multilingual\"},\n    \"link_batch\":\"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6 - Only Return Redactions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n        \"I’ll need a ticket for tonight for a trip on the seventh to the ninth. I don’t really care what class I’m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It’s 0134879. What’s that? No um it’s not American, it’s Bahraini. Yeah. And the last name- well the last name I’m not sure about. We just have a name field on our passports, it doesn’t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it’s just the remainder. Aw that sucks. Well a hundred and forty bucks isn’t bad. Anyway it’ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"return_entity\": false\n    }\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7 - Employee Help Center Conversation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"project_id\": \"HRgenAIApp\",\n    \"text\": [\n        \"Hello Xavier, can you tell me your employee ID?\",\n        \"Yep, my Best Corp ID is GID-45434, and my SIN is 690 871 283\",\n        \"Okay, thanks Xavier, why are you calling today?\",\n        \"I broke my right leg on the 31st and I'm waiting for my x-ray results. dr. zhang, mercer health centre.\",\n        \"Oh, so sorry to hear that! How can we help?\",\n        \"I won't be able to come back to the office in New York for a while\",\n        \"No problem Xavier, I will enter a short term work from home for you. You're all set!\",\n        \"Thanks so much Carole!\"\n    ],\n    \"link_batch\": true,\n    \"entity_detection\": {\n        \"accuracy\": \"high\",\n        \"entity_types\": [\n            {\n                \"type\": \"DISABLE\",\n                \"value\": [\n                    \"INJURY\"\n                ]\n            }\n        ],\n        \"filter\": [\n            {\n                \"type\": \"BLOCK\",\n                \"entity_type\": \"EMPLOYEE_ID\",\n                \"pattern\": \"GID-\\\\d{5}\"\n            },\n            {\n                \"type\": \"BLOCK\",\n                \"entity_type\": \"BUSINESS_UNIT\",\n                \"pattern\": \"Best Corp\"\n            }\n        ],\n        \"return_entity\": true\n    },\n    \"processed_text\": {\n        \"type\": \"MARKER\",\n        \"pattern\": \"[UNIQUE_HASHED_ENTITY_TYPE]\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 - CCI Example",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n        \"Microsoft will look to acquired SoftCorp for 30B USD after news that revenue is declined and they terminated the CEO\"\n    ],\n    \"processed_text\": {\n        \"type\": \"MARKER\",\n        \"pattern\": \"[BEST_ENTITY_TYPE]\"\n    },\n    \"entity_detection\": {\n        \"accuracy\": \"high\",\n        \"entity_types\": [\n            {\n                \"type\": \"ENABLE\", \"value\": [\"TREND\",\"FINANCIAL_METRIC\",\"CORPORATE_ACTION\",\"ORGANIZATION\", \"MONEY\"]\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 - Synthetic Data Creation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": [\n      \"Hello, my name is May. I am the aunt of Pieter Parker. We live in Toronto, Canada.\"\n    ],\n    \"link_batch\": false,\n    \"entity_detection\": {\n      \"accuracy\": \"high\",\n      \"return_entity\": true\n    },\n    \"processed_text\": {\n      \"type\": \"SYNTHETIC\",\n      \"synthetic_entity_accuracy\": \"standard\",\n      \"preserve_relationships\": true\n    }\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"protocol": "https",
+					"host": [
+						"api",
+						"private-ai",
+						"com"
+					],
+					"path": [
+						"deid",
+						"v3",
+						"process",
+						"text"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
