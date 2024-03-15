@@ -24,17 +24,17 @@ dir_path = "/path/to/directory"
 file_type_dict = {
     ".pdf": "application/pdf",
     ".json": "application/json",
-    ".xml":	"application/xml",
-    ".csv":	"text/csv",
-    ".doc":	"application/msword",
+    ".xml": "application/xml",
+    ".csv": "text/csv",
+    ".doc": "application/msword",
     ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ".eml":	"message/rfc822",
-    ".txt":	"text/plain",
-    ".xls":	"application/vnd.ms-excel",
+    ".eml": "message/rfc822",
+    ".txt": "text/plain",
+    ".xls": "application/vnd.ms-excel",
     ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    ".ppt":	"application/vnd.ms-powerpoint",
+    ".ppt": "application/vnd.ms-powerpoint",
     ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    ".dcm":	"application/dicom",
+    ".dcm": "application/dicom",
 }
 
 # Gather all files in directory
