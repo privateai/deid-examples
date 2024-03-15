@@ -1,5 +1,5 @@
 # Example script to illustrate how to make API calls to the Private AI Docker
-# container to deidentify a text using the unique PII markers feature (default).
+# container to deidentify all files in a provided directory.
 #
 # To use this script, please start the Docker container locally, as per the
 # instructions at https://private-ai.com/docs/installation.
@@ -35,6 +35,17 @@ file_type_dict = {
     ".ppt": "application/vnd.ms-powerpoint",
     ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     ".dcm": "application/dicom",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".tif": "image/tiff",
+    ".tiff": "image/tiff",
+    ".png": "image/png",
+    ".bmp": "image/bmp",
+    ".wav": "audio/wav",
+    ".mp3": "audio/mpeg",
+    ".mp4": "audio/mp4",
+    ".m4a": "audio/m4a",
+    ".webm": "audio/webm",
 }
 
 # Gather all files in directory
