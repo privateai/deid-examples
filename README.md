@@ -4,7 +4,7 @@ This repository contains examples that showcase how to use the Private AI REST A
 
 ## How to get access
 
-Get a [demo API key here](https://www.private-ai.com/z2zu)
+Get a [demo API key here](https://portal.private-ai.com/)
 
 For further information & access to the container feel free to [contact us](https://www.private-ai.com/da2t).
 
@@ -12,7 +12,7 @@ For further information & access to the container feel free to [contact us](http
 
 Private AI's service is primarily delivered via a self-hosted container. Please follow the [setup instructions](https://docs.private-ai.com/installation/) to get started.
 
-It is also possible to use the Private AI cloud endpoint located at [https://api.private-ai.com/deid/v1/deidentify_text](https://api.private-ai.com/deid/v1/deidentify_text).
+It is also possible to use the Private AI cloud endpoint located at [https://portal.private-ai.com/](https://portal.private-ai.com/).
 
 ## What are these examples?
 
