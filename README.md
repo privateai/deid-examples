@@ -4,10 +4,7 @@ This repository contains examples that showcase how to use the Private AI REST A
 
 ## How to get access
 
-We have a few ways to get started:
-
-1. Get the container on the [AWS Marketplace](https://docs.private-ai.com/aws/aws_marketplace/)
-2. Get a [demo API key here](https://www.private-ai.com/z2zu)
+Get a [demo API key here](https://www.private-ai.com/z2zu)
 
 For further information & access to the container feel free to [contact us](https://www.private-ai.com/da2t).
 
