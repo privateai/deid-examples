@@ -1,0 +1,71 @@
+Patient_id,Patient_name,patient_gender,patient_birth_date,patient_phone,disease_name,city,hospital_id
+187158,Harbir,Female,1924-06-30,+91 0112009318,Galactosemia,Rourkela,H1001
+112766,Brahmdev,Female,1948-12-20,+91 1727749552,Bladder cancer,Tiruvottiyur,H1016
+199252,Ujjawal,Male,1980-04-16,+91 8547451606,Kidney cancer,Berhampur,H1009
+133424,Ballari,Female,1969-09-25,+91 0106026841,Suicide,Bihar Sharif,H1017
+172579,Devnath,Female,1946-05-01,+91 1868774631,Food allergy,Bidhannagar,H1019
+171320,Atasi,Male,1967-10-02,+91 9747336855,Whiplash,Amravati,H1013
+107794,Manish,Male,1967-06-06,+91 4354294043,Sunbathing,Panvel,H1004
+130339,Aakar,Female,1925-03-05,+91 2777633911,Drug consumption,Bihar Sharif,H1000
+110377,Gurudas,Male,1945-05-06,+91 1232859381,Dengue,Kamarhati,H1001
+149367,,Male,1925-06-12,+91 1780763280,Head banging,Bangalore,H1013
+156168,,Male,1976-02-03,+91 5586075345,Fanconi anaemia,Rajkot,H1004
+114241,,Female,1955-01-22,+91 4146391938,Breast cancer,Ghaziabad,H1015
+146382,Dharmadaas,Male,1964-04-29,+91 6345482027,Anthrax,Bhalswa Jahangir Pur,H1019
+132748,Brahmvir,Male,1991-11-11,+91 7316972612,Cystic fibrosis,Ambala,H1018
+167340,,Female,1981-01-25,+91 2960004518,Galactosemia,Surendranagar Dudhrej,H1003
+135184,Bhagvan,Female,1966-07-24,+91 0297693485,Dengue,Bhimavaram,H1018
+179662,Amritkala,Female,1933-11-20,+91 0537157280,Smallpox,Meerut,H1018
+184479,Bandhu,Male,1996-10-15,+91 0695289163,Pollen allergy,Chinsurah,H1010
+156988,Bhagavaana,Female,1935-09-16,+91 6071745855,Breast cancer,Shahjahanpur,H1012
+132870,,Female,1924-11-09,+91 8906694405,Glaucoma,Jabalpur,H1017
+148137,Umang,Female,1963-07-14,+91 9485838770,Pet allergy,Haridwar,H1002
+113280,Darsana,Male,1932-05-29,+91 7676311811,Rett Syndrome,Dibrugarh,H1019
+134184,Prakash,Female,1923-09-15,+91 9268324471,Flu,Kottayam,H1001
+122592,Vaijayanti,Male,1920-11-13,+91 9358851649,Cholera,Mira-Bhayandar,H1009
+154439,Menakshi,Male,1987-03-06,+91 0531676556,Scurvy,Kamarhati,H1016
+117945,,Male,1955-12-24,+91 2416747182,Glaucoma,Karimnagar,H1009
+189996,Ekant,Male,1943-08-13,+91 7686951174,Measles,Berhampore,H1003
+146540,Chancharik,Male,1983-09-05,+91 5309364825,Scurvy,Chapra,H1012
+156434,Pushti,Female,1935-10-15,+91 7093722203,Flu,Morbi,H1019
+197352,Swati,Female,1987-12-11,+91 1028477510,Pet allergy,Amravati,H1019
+138778,Upasana,Male,1956-06-01,+91 0548234943,Lymphedema,Hyderabad,H1005
+162665,Kanhaiya,Female,1954-10-19,+91 0788738026,Alcohol consumption,Mysore,H1009
+197503,,Female,1968-07-02,+91 2599794460,Stroke,Gwalior,H1009
+113476,Gensho,Male,1992-06-06,+91 4834040556,Galactosemia,Ludhiana,H1016
+195876,Gopal,Male,1986-05-14,+91 1181471524,Vertigo,Raebareli,H1017
+150189,Dheeman,Male,1945-05-04,+91 8239321466,Measles,Mysore,H1017
+138861,Upasana,Female,1927-10-03,,Heart Attack,Ratlam,H1004
+146555,,Male,1948-11-10,+91 8390195092,Phenylketonuria,Vadodara,H1007
+199114,,Female,1955-04-07,+91 7434031446,Phenylketonuria,Vijayawada,H1017
+105758,Madhubala,Male,1937-01-11,+91 8498685882,Head banging,Jaunpur,H1003
+109251,Anjushree,Male,1976-07-04,+91 5322869455,Choking,Ghaziabad,H1001
+156223,,Female,1930-11-25,,Fanconi anaemia,Agartala,H1012
+108576,Chakrika,Male,1964-08-05,+91 8185162879,Stroke,Ranchi,H1003
+132947,Saroj,Female,1942-08-26,+91 5690408243,Anaemia,Muzaffarpur,H1016
+148674,Ayushmati,Male,1932-09-20,+91 3683223970,Diabetes,Satna,H1016
+133107,Drashti,Male,1926-07-03,+91 9447269993,Lymphedema,Saharsa,H1019
+193137,Aayushmaan,Female,1983-11-14,+91 4464709769,Phenylketonuria,Mehsana,H1014
+196369,,Male,1931-02-04,+91 2973105946,Choking,Shivpuri,H1017
+109342,Chitranjan,Female,1925-09-09,+91 5176024720,Asthma,Morbi,H1011
+121783,Paridhi,Female,1959-03-27,+91 2139280879,Bladder cancer,Jabalpur,H1013
+197441,Deependu,Female,1952-02-13,+91 5674176644,Lung cancer,Bareilly,H1001
+194166,,Male,1946-10-17,+91 9887324437,Colorectal cancer,Baranagar,H1015
+110690,Laksman,Female,1939-05-26,+91 4504120828,Food Poisoning,Ahmednagar,H1001
+180709,,Male,1988-06-27,+91 6877897646,Anthrax,Pali,H1017
+119268,Shivakari,Female,1944-11-02,+91 3740484063,Mold allergy,Hapur,H1008
+163148,Madhu,Male,1984-10-23,+91 8367885507,Beriberi,Udaipur,H1008
+118913,Chanak,Male,1954-08-27,+91 5093121123,Malaria,Jalandhar,H1004
+167423,Chittesh,Male,1949-10-17,+91 1378163498,Asthma,Thoothukudi,H1019
+141703,Nawal,Male,1940-01-22,+91 1885105576,Fractures,Bhopal,H1006
+173518,Gajabahu,Male,1959-03-15,+91 1207869436,Malaria,Udupi,H1015
+140394,Jitesh,Male,1983-02-03,+91 6515468035,Anthrax,Karimnagar,H1010
+164524,,Female,1966-09-25,+91 6477918745,Mold allergy,Kharagpur,H1015
+198182,Lalit,Female,1924-02-15,+91 4647833992,Head banging,Tinsukia,H1017
+115143,Anshuk,Male,1991-06-17,+91 9764690642,Drug consumption,Uluberia,H1001
+156364,,Male,1994-01-13,+91 8444537013,Cholera,Panihati,H1019
+191132,Dipesh,Female,1949-04-01,+91 5851958964,Glaucoma,Kochi,H1016
+105686,,Male,1930-09-01,+91 7061843400,Hepatitis,Kolhapur,H1008
+160140,Kishan,Male,1923-05-12,+91 9067652693,Rett Syndrome,Srikakulam,H1002
+114252,,Female,1927-02-26,+91 4984346995,Diabetes,Ambarnath,H1014
+188365,Bhageeratha,Male,1973-03-21,+91 0590662722,Pet allergy,Sonipat,H1017
