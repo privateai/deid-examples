@@ -32,7 +32,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -40,7 +40,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -75,7 +75,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -83,7 +83,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -118,7 +118,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -126,7 +126,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -161,7 +161,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -169,7 +169,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -204,7 +204,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -212,7 +212,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -247,7 +247,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -255,7 +255,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -290,7 +290,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -298,7 +298,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -333,7 +333,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -341,7 +341,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
@@ -376,7 +376,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/deid/v3/process/text",
+					"raw": "https://api.private-ai.com/communityv3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -384,7 +384,7 @@
 						"com"
 					],
 					"path": [
-						"deid",
+						"community",
 						"v3",
 						"process",
 						"text"
