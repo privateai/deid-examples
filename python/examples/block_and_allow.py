@@ -16,7 +16,7 @@ from privateai_client import PAIClient, request_objects
 dotenv.load_dotenv()
 
 # On initialization
-client = PAIClient(url="https://api.private-ai.com/community", api_key=os.environ["API_KEY"])
+client = PAIClient(url="https://api.private-ai.com/community/", api_key=os.environ["API_KEY"])
 
 
 # Here is the same text we are going to analyze. In this example we will block Names, Locations, and Cities.
