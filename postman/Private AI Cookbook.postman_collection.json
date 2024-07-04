@@ -161,7 +161,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://api.private-ai.com/communityv3/process/text",
+					"raw": "https://api.private-ai.com/community/v3/process/text",
 					"protocol": "https",
 					"host": [
 						"api",
