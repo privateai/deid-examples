@@ -10,7 +10,7 @@ Download the [Private AI Cookbook postman collection](./Private%20AI%20Cookbook.
 
 To use the Community API, [sign up or sign in](https://private-ai.com/start-api) to the Private AI Customer Portal and get a free API key. 
 
-Within Postman, click on the Private AI Cookbook and select the Authorization tab. Paste your Community API key into the Value field, and then try out the examples.
+Within Postman, click on the Private AI Cookbook and select the Authorization tab. Paste your Community API key into the Value field, and then try out the examples.\
 ![Postman API key configuration](../images/postman.png)
 
 ## Additonal Information
