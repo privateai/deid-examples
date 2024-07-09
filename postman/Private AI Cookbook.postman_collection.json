@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d6a01cc7-e2b6-4b2e-a6d0-40d4ad78bc6a",
+		"_postman_id": "3e2f90bf-bc5d-4b2f-83dd-1ab91d941a87",
 		"name": "Private AI Cookbook",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30659417"
+		"_exporter_id": "33486951"
 	},
 	"item": [
 		{
@@ -14,11 +14,6 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
 						"type": "text"
 					}
 				],
@@ -58,11 +53,6 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -100,11 +90,6 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
 						"type": "text"
 					}
 				],
@@ -144,11 +129,6 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -186,11 +166,6 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
 						"type": "text"
 					}
 				],
@@ -230,11 +205,6 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -272,11 +242,6 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
 						"type": "text"
 					}
 				],
@@ -316,11 +281,6 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -359,11 +319,6 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "x-api-key",
-						"value": "",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -393,5 +348,20 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			}
+		]
+	}
 }
