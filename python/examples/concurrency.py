@@ -34,10 +34,9 @@ def make_request(request: request_objects.process_text_obj) -> Dict[str, str]:
     response = client.process_text(request)
 
     # check if the request was successful
-    response.raise_for_status()
-
-    # return the body of the response
-    return response.json()
+    if response.ok: 
+        # return the response
+        return response.processed_text
 
 
 # function that pretty prints the response
@@ -49,16 +48,15 @@ def print_result(request: request_objects.process_text_obj) -> None:
 # function that accepts a variable that will hold the result of the make_request
 # function
 def return_make_request(
-    request: request_objects.process_text_obj
-) -> None:
+    request: request_objects.process_text_obj, response: List) -> None:
     response.append(make_request(request))
 
 
 # Concurrency example using the threading library
 def threading_example() -> None:
 
-    entity_detection_obj = request_objects.entity_detection_obj(
-    accuracy="high", return_entity=True)
+    entity_detection_obj = request_objects.entity_detection_obj(return_entity=True)
+
     processed_text_obj = request_objects.processed_text_obj(type="MARKER")
 
     process_text_request = request_objects.process_text_obj(
@@ -94,8 +92,8 @@ def threading_example_with_return() -> None:
     # initialize the variable that will hold the result from the thread
     response = []
 
-    entity_detection_obj = request_objects.entity_detection_obj(
-    accuracy="high", return_entity=True)
+    entity_detection_obj = request_objects.entity_detection_obj(return_entity=True)
+
     processed_text_obj = request_objects.processed_text_obj(type="MARKER")
 
     process_text_request = request_objects.process_text_obj(
@@ -130,8 +128,8 @@ def threading_example_with_return() -> None:
 # Concurrency example using the Thread Pool from the concurrent.futures library
 def concurrent_thread_pool_example() -> None:
 
-    entity_detection_obj = request_objects.entity_detection_obj(
-    accuracy="high", return_entity=True)
+    entity_detection_obj = request_objects.entity_detection_obj(return_entity=True)
+
     processed_text_obj = request_objects.processed_text_obj(type="MARKER")
 
     process_text_request = request_objects.process_text_obj(
@@ -158,8 +156,8 @@ def concurrent_thread_pool_example() -> None:
 # Concurrency example using the Process Poll from the concurrent.futures library
 def concurrent_process_pool_example() -> None:
 
-    entity_detection_obj = request_objects.entity_detection_obj(
-    accuracy="high", return_entity=True)
+    entity_detection_obj = request_objects.entity_detection_obj(return_entity=True)
+    
     processed_text_obj = request_objects.processed_text_obj(type="MARKER")
 
     process_text_request = request_objects.process_text_obj(
