@@ -23,7 +23,6 @@ axios
       text: ["My name is John and my friend is Grace and we live in Barcelona"],
       link_batch: false,
       entity_detection: {
-        accuracy: "high",
         return_entity: true,
       },
       processed_text: {
@@ -56,7 +55,6 @@ const unique_pii_markers = async () => {
         ],
         link_batch: false,
         entity_detection: {
-          accuracy: "high",
           return_entity: true,
         },
         processed_text: {

@@ -23,7 +23,6 @@ axios
       text: ["My name is John and my friend is Grace"],
       link_batch: false,
       entity_detection: {
-        accuracy: "high",
         return_entity: true,
       },
       processed_text: {
@@ -54,7 +53,6 @@ const non_unique_pii_markers = async () => {
         text: ["My name is John and my friend is Grace"],
         link_batch: false,
         entity_detection: {
-          accuracy: "high",
           return_entity: true,
         },
         processed_text: {
