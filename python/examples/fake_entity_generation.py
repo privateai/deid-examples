@@ -23,7 +23,6 @@ process_text_request = {
     ],
     "link_batch": False,
     "entity_detection": {
-        "accuracy": 'high',
         "return_entity": True
     },
     "processed_text": {
