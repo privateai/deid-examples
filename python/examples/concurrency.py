@@ -8,6 +8,7 @@
 # `API_KEY=<your key here> python concurrency.py` or you can define a `.env`
 # file which has the line`API_KEY=<your key here>`.
 import os
+import logging
 import pprint
 
 # For this example, only the threading and the concurrent.futures libraries are
@@ -37,6 +38,8 @@ def make_request(request: request_objects.process_text_obj) -> Dict[str, str]:
     if response.ok: 
         # return the response
         return response.processed_text
+    else:
+        logging.error(f"response returned with error code: {response.status_code}")
 
 
 # function that pretty prints the response
