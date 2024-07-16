@@ -22,7 +22,6 @@ axios
     {
       uri: "https://example.com/example-image.jpeg",
       entity_detection: {
-        accuracy: "high",
         return_entity: true,
       },
       pdf_options: { density: 150 },
@@ -52,7 +51,6 @@ const process_file_uri = async () => {
       {
         uri: "https://example.com/example-image.jpeg",
         entity_detection: {
-          accuracy: "high",
           return_entity: true,
         },
         pdf_options: { density: 150 },

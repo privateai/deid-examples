@@ -23,7 +23,6 @@ axios
       text: ["My name is John and my friend is Grace and we live in Barcelona"],
       link_batch: false,
       entity_detection: {
-        accuracy: "high",
         return_entity: true,
         entity_types: [
           {
@@ -62,7 +61,6 @@ const enabled_classes = async () => {
         ],
         link_batch: false,
         entity_detection: {
-          accuracy: "high",
           return_entity: true,
           entity_types: [
             {

@@ -18,8 +18,8 @@ dotenv.load_dotenv()
 # On initialization
 client = PAIClient("http", "localhost", "8080", api_key=os.environ["API_KEY"])
 
-entity_detection_obj = request_objects.entity_detection_obj(
-    accuracy="high", return_entity=True)
+entity_detection_obj = request_objects.entity_detection_obj(return_entity=True)
+
 processed_text_obj = request_objects.processed_text_obj(type="MARKER")
 
 process_text_request = request_objects.process_text_obj(

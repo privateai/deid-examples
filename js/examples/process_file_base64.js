@@ -25,7 +25,6 @@ axios
         content_type: "application/pdf or image/jpeg",
       },
       entity_detection: {
-        accuracy: "high",
         return_entity: true,
       },
       pdf_options: { density: 150 },
@@ -58,7 +57,6 @@ const process_file_base64 = async () => {
           content_type: "application/pdf or image/jpeg",
         },
         entity_detection: {
-          accuracy: "high",
           return_entity: true,
         },
         pdf_options: { density: 150 },

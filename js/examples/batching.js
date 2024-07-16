@@ -28,7 +28,6 @@ axios
       ],
       link_batch: true,
       entity_detection: {
-        accuracy: "high",
         return_entity: true,
       },
       processed_text: {
@@ -64,7 +63,6 @@ const batching = async () => {
         ],
         link_batch: true,
         entity_detection: {
-          accuracy: "high",
           return_entity: true,
         },
         processed_text: {
