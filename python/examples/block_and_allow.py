@@ -32,13 +32,13 @@ sample_entity_type_selector = request_objects.entity_type_selector_obj(
 
 #this is a block filter where you can define strings or regex patterns to block
 block_string = request_objects.filter_selector_obj(
-    type="BLOCK", entity_type="CUSTOM_ENTITY",pattern="I SHOULD BLOCK THIS"
+    type="BLOCK", entity_type="CUSTOM_ENTITY", pattern="I SHOULD BLOCK THIS"
 )
 
 #similarily, this is an allow list. In this case I want to always allow Barcelona to pass 
 #but no other location
 allow_string = request_objects.filter_selector_obj(
-    type="ALLOW", entity_type="LOCATION",pattern="Barcelona"
+    type="ALLOW", pattern="Barcelona"
 )
 
 sample_entity_detection = request_objects.entity_detection_obj(
