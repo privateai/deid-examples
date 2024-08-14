@@ -1,36 +1,29 @@
-# Example script to illustrate how to make API calls to the Private AI Docker
-# container to deidentify a text using concurrency.
-#
-# To use this script, please start the Docker container locally, as per the
-# instructions at https://private-ai.com/docs/installation.
-#
-# In order to use the API key issued by Private AI, you can run the script as
-# `API_KEY=<your key here> python concurrency.py` or you can define a `.env`
-# file which has the line`API_KEY=<your key here>`.
-import os
+# Example script to illustrate how to make API calls to the Private AI API
+# to deidentify a text using concurrency.
+
+import dotenv
 import logging
+import os
 import pprint
 
 # For this example, only the threading and the concurrent.futures libraries are
 # used to keep the examples concise. Since the multiprocessing.Process class has
 # the same API as the threading.Thread class, you can follow the threading
 # examples to implement concurrency using the multiprocessing library.
-import threading
-import concurrent.futures
-from typing import Dict, List
 
-import dotenv
+import concurrent.futures
+import threading
 
 from privateai_client import PAIClient, request_objects
 
 # Use to load the API KEY for authentication
 dotenv.load_dotenv()
 
-# On initialization
-client = PAIClient("http", "localhost", "8080", api_key=os.environ["API_KEY"])
+# Client initialization
+client = PAIClient(url=os.environ["PAI_URL"], api_key=os.environ["API_KEY"])
 
 # define the function that will make the POST request and print the result
-def make_request(request: request_objects.process_text_obj) -> Dict[str, str]:
+def make_request(request: request_objects.process_text_obj) -> dict[str, str]:
     
     response = client.process_text(request)
 
@@ -49,9 +42,8 @@ def print_result(request: request_objects.process_text_obj) -> None:
 
 
 # function that accepts a variable that will hold the result of the make_request
-# function
 def return_make_request(
-    request: request_objects.process_text_obj, response: List) -> None:
+    request: request_objects.process_text_obj, response: list) -> None:
     response.append(make_request(request))
 
 
@@ -72,7 +64,7 @@ def threading_example() -> None:
         processed_text=processed_text_obj
     )
 
-    # initialize the Thread object
+    # Initialize the Thread object
     requests_thread = threading.Thread(
         target=print_result,
         kwargs={
@@ -80,10 +72,10 @@ def threading_example() -> None:
         }
     )
 
-    # start the tread
+    # Start the tread
     requests_thread.start()
 
-    # use the following line to block the main thread until the requests_thread
+    # Use the following line to block the main thread until the requests_thread
     # terminates
     requests_thread.join()
 
@@ -109,7 +101,7 @@ def threading_example_with_return() -> None:
         processed_text=processed_text_obj
     )
     
-    # initialize the Thread object
+    # Initialize the Thread object
     thread = threading.Thread(
         target=return_make_request,
         kwargs={
@@ -118,13 +110,13 @@ def threading_example_with_return() -> None:
         }
     )
 
-    # start the thread
+    # Start the thread
     thread.start()
 
-    # block the main thread until the thread terminates
+    # Block the main thread until the thread terminates
     thread.join()
 
-    # print the result
+    # Print the result
     pprint.pprint(response)
 
 
@@ -145,7 +137,7 @@ def concurrent_thread_pool_example() -> None:
         processed_text=processed_text_obj
     )
     
-    # instantiate the thread pool
+    # Instantiate the thread pool
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         future = [executor.submit(
             make_request,
@@ -156,7 +148,7 @@ def concurrent_thread_pool_example() -> None:
             pprint.pprint(completed.result())
 
 
-# Concurrency example using the Process Poll from the concurrent.futures library
+# Concurrency example using the Process Pool from the concurrent.futures library
 def concurrent_process_pool_example() -> None:
 
     entity_detection_obj = request_objects.entity_detection_obj(return_entity=True)
@@ -173,14 +165,14 @@ def concurrent_process_pool_example() -> None:
         processed_text=processed_text_obj
     )
     
-    # instantiate the process pool
+    # Instantiate the process pool
     with concurrent.futures.ProcessPoolExecutor() as executor:
         future = [executor.submit(
             print_result,
             request=process_text_request
         )]
 
-        # wait for the process to be complete
+        # Wait for the process to be complete
         concurrent.futures.wait(future)
 
 
@@ -189,9 +181,11 @@ if __name__ == "__main__":
     # Use to load API KEY for authentication
     dotenv.load_dotenv()
 
-    # Check if API_KEY environment variable is defined
+    # Check if the API_KEY and PAI_URL environment variables are set
     if "API_KEY" not in os.environ:
-        raise KeyError("API_KEY must be defined in order to run the examples.")
+        raise KeyError("API_KEY must be defined in .env to run the examples.")
+    if "PAI_URL" not in os.environ:
+        raise KeyError("PAI_URL must be defined in .env to run the examples.")
 
     print("\nConcurrency example using the threading library:")
     threading_example()
