@@ -5,7 +5,7 @@ import dotenv
 import os
 from privateai_client import PAIClient, request_objects
 
-# Use to load the API KEY for authentication
+# Use to load the API KEY and URL
 dotenv.load_dotenv()
 
 # Check if the API_KEY and PAI_URL environment variables are set
