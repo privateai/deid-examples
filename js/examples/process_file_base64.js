@@ -1,36 +1,25 @@
 /**
- * Example script to illustrate how to make API calls to the Private AI Docker
- * container to deidentify text using the enabled classes feature.
- *
- * To use this script, please start the Docker container locally, as per the
- * instructions at https://private-ai.com/docs/installation.
- *
- * In order to use the API key issued by Private AI, you can run the script as
- * `API_KEY=<your key here> node process_file.js` or you can define a `.env`
- * file which has the line `API_KEY=<your key here>`.
+ * Example script to illustrate how to make requests to the Private AI API
+ * to deidentify a file.
  */
 const axios = require("axios");
 const dotenv = require("dotenv");
+const fs = require("fs");
 
-// Use to load the API_KEY for authentication
+// Use to load the API_KEY and URL
 dotenv.config();
 
+const b64file = fs.readFileSync("examples/sample.txt", {encoding: "base64"});
+
 // Example without async/await
-axios
-  .post(
-    "http://localhost:8080/v3/process/files/base64",
+function sync_process_file_base64() {
+  console.log("***** Sync process file base64 *****");
+  axios.post(
+    `${process.env.PAI_URL}/v3/process/files/base64`,
     {
       file: {
-        data: "JVBERi0xLjQKJdPr6eEKMSAwIG9iago8PC9UaXRsZSAoc2FtcGxlKQovUHJvZHVj...", // base64 converted file
-        content_type: "application/pdf or image/jpeg",
-      },
-      entity_detection: {
-        return_entity: true,
-      },
-      pdf_options: { density: 150 },
-      audio_options: {
-        bleep_start_padding: 0,
-        bleep_end_padding: 0,
+        data: b64file,
+        content_type: "text/plain",
       },
     },
     {
@@ -40,29 +29,23 @@ axios
       },
     }
   )
-  .then((result) => console.log(result.data))
+  .then((result) => console.log(JSON.stringify(result.data, undefined, 2)))
   .catch((error) =>
     console.error(
       `The request failed with the status code ${error.response.status}`
     )
   );
+}
 
-const process_file_base64 = async () => {
+async function async_process_file_base64() {
+  console.log("***** Async process file base64 *****");
   try {
     const result = await axios.post(
-      "http://localhost:8080/v3/process/files/base64",
+      `${process.env.PAI_URL}/v3/process/files/base64`,
       {
         file: {
-          data: "JVBERi0xLjQKJdPr6eEKMSAwIG9iago8PC9UaXRsZSAoc2FtcGxlKQovUHJvZHVj...", // base64 converted file
-          content_type: "application/pdf or image/jpeg",
-        },
-        entity_detection: {
-          return_entity: true,
-        },
-        pdf_options: { density: 150 },
-        audio_options: {
-          bleep_start_padding: 0,
-          bleep_end_padding: 0,
+          data: b64file,
+          content_type: "text/plain",
         },
       },
       {
@@ -75,7 +58,7 @@ const process_file_base64 = async () => {
 
     const { data } = result;
 
-    console.log(data);
+    console.log(JSON.stringify(data, undefined, 2));
   } catch (error) {
     console.error(
       `The request failed with the status code ${error.response.status}`
@@ -83,4 +66,5 @@ const process_file_base64 = async () => {
   }
 };
 
-process_file_base64();
+// sync_process_file_base64();
+async_process_file_base64();
