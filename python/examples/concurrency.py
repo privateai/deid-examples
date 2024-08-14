@@ -16,7 +16,7 @@ import threading
 
 from privateai_client import PAIClient, request_objects
 
-# Use to load the API KEY for authentication
+# Use to load the API KEY and URL
 dotenv.load_dotenv()
 
 # Client initialization
