@@ -4,7 +4,7 @@ This repository contains examples that showcase how to use the Private AI REST A
 
 ## How to get access
 
-Get a [demo API key here](https://portal.private-ai.com/)
+Get a [Community API key here](https://portal.private-ai.com/)
 
 For further information & access to the container feel free to [contact us](https://www.private-ai.com/da2t).
 
