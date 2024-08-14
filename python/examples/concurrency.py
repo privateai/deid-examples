@@ -1,5 +1,5 @@
 # Example script to illustrate how to make API calls to the Private AI API
-# to deidentify a text using concurrency.
+# to deidentify text using concurrency.
 
 import dotenv
 import logging

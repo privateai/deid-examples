@@ -1,5 +1,5 @@
 # Example script to illustrate how to make API calls to the Private AI API
-# to deidentify a text using the enabled classes feature.
+# to deidentify text using the enabled classes feature.
 
 import dotenv
 import os
