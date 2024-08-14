@@ -6,7 +6,8 @@ This folder contains a set of javascript examples for interacting with the Priva
 
 1. Ensure you have installed Node.js v20.16 or greater. It is recommended to use [Node Version Manager](https://github.com/nvm-sh/nvm) if you have multiple node projects of different levels.
 1. Run `npm install` to install the required packages from `package.json`.
-1. Copy the `.env.example` file to `.env` and update the variables with your own API key and Private AI API URL.
+1. Get your Community API key from the Private AI [Customer Portal](https://portal.private-ai.com).
+1. Copy the `.env.example` file to `.env` and update it with your Community API key.
 
 ## Running the examples
 
