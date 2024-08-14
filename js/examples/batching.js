@@ -1,24 +1,18 @@
 /**
- * Example script to illustrate how to make API calls to the Private AI Docker
- * container to deidentify text using the batching feature.
- *
- * To use this script, please start the Docker container locally, as per the
- * instructions at https://private-ai.com/docs/installation.
- *
- * In order to use the API key issued by Private AI, you can run the script as
- * `API_KEY=<your key here> node batching.js` or you can define a `.env` file
- * which has the line `API_KEY<your key here>`.
+ * Example script to illustrate how to make requests to the Private AI API
+ * to deidentify text using the batching feature.
  */
 const axios = require("axios");
 const dotenv = require("dotenv");
 
-// Use to load the API_KEY for authentication
+// Use to load the API_KEY and URL
 dotenv.config();
 
 // Example without async/await
-axios
-  .post(
-    "http://localhost:8080/v3/process/text",
+function sync_batching() {
+  console.log("***** Sync batching *****");
+  axios.post(
+    `${process.env.PAI_URL}/v3/process/text`,
     {
       text: [
         "Hi, my name is Penelope, could you tell me your phone number please?",
@@ -42,18 +36,20 @@ axios
       },
     }
   )
-  .then((result) => console.log(result.data))
+  .then((result) => console.log(JSON.stringify(result.data, undefined, 2)))
   .catch((error) =>
     console.error(
       `The request failed with the status code ${error.response.status}`
     )
   );
+}
 
 // Example with async/await
-const batching = async () => {
+async function async_batching() {
+  console.log("***** Async batching *****");
   try {
     const result = await axios.post(
-      "http://localhost:8080/v3/process/text",
+      `${process.env.PAI_URL}/v3/process/text`,
       {
         text: [
           "Hi, my name is Penelope, could you tell me your phone number please?",
@@ -80,7 +76,7 @@ const batching = async () => {
 
     const { data } = result;
 
-    console.log(data);
+    console.log(JSON.stringify(data, undefined, 2));
   } catch (error) {
     console.error(
       `The request failed with the status code ${error.response.status}`
@@ -88,4 +84,5 @@ const batching = async () => {
   }
 };
 
-batching();
+// sync_batching();
+async_batching();

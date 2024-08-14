@@ -1,24 +1,18 @@
 /**
- * Example script to illustrate how to make API calls to the Private AI Docker
- * container to deidentify text using the unique PII markers feature (default).
- *
- * To use this script, please start the Docker container locally, as per the
- * instructions at https://private-ai.com/docs/installation.
- *
- * In order to use the API key issued by Private AI, you can run the script as
- * `API_KEY=<your key here> node masked_pii_markers.js` or you can define a `.env`
- * file which has the line `API_KEY=<your key here>`.
+ * Example script to illustrate how to make requests to the Private AI API
+ * to deidentify text using the masked PII markers feature.
  */
 const axios = require("axios");
 const dotenv = require("dotenv");
 
-// Use to load the API_KEY for authentication
+// Use to load the API_KEY and URL
 dotenv.config();
 
 // Example without async/await
-axios
-  .post(
-    "http://localhost:8080/v3/process/text",
+function sync_masked_pii_markers() {
+  console.log("***** Sync masked PII markers *****");
+  axios.post(
+    `${process.env.PAI_URL}/v3/process/text`,
     {
       text: ["My name is John and my friend is Grace and we live in Barcelona"],
       link_batch: false,
@@ -43,12 +37,14 @@ axios
       `The request failed with the status code ${error.response.status}`
     )
   );
+}
 
 // Example with async/await
-const masked_pii_markers = async () => {
+async function async_masked_pii_markers () {
+  console.log("***** Async masked PII markers *****");
   try {
     const result = await axios.post(
-      "http://localhost:8080/v3/process/text",
+      `${process.env.PAI_URL}/v3/process/text`,
       {
         text: [
           "My name is John and my friend is Grace and we live in Barcelona",
@@ -71,7 +67,7 @@ const masked_pii_markers = async () => {
     );
     const { data } = result;
 
-    console.log(data);
+    console.log(JSON.stringify(data, undefined, 2));
   } catch (error) {
     console.error(
       `The request failed with the status code ${error.response.status}`
@@ -79,4 +75,5 @@ const masked_pii_markers = async () => {
   }
 };
 
-masked_pii_markers();
+// sync_masked_pii_markers();
+async_masked_pii_markers();
