@@ -1,22 +1,21 @@
-# Example script to illustrate how to make API calls to the Private AI Docker
-# container to deidentify a text using the enabled classes feature.
-#
-# To use this script, please start the Docker container locally, as per the
-# instructions at https://private-ai.com/docs/installation.
-#
-# In order to use the API key issued by Private AI, you can run the script as
-# `API_KEY=<your key here> python enabled_classes.py` or you can define a `.env`
-# file which has the line`API_KEY=<your key here>`.
+# Example script to illustrate how to make API calls to the Private AI API
+# to deidentify text using the enabled classes feature.
 
-import os
 import dotenv
+import os
 from privateai_client import PAIClient, request_objects
 
-# Use to load the API KEY for authentication
+# Use to load the API KEY and URL
 dotenv.load_dotenv()
 
-# On initialization
-client = PAIClient(url="https://api.private-ai.com/community/", api_key=os.environ["API_KEY"])
+# Check if the API_KEY and PAI_URL environment variables are set
+if "API_KEY" not in os.environ:
+    raise KeyError("API_KEY must be defined in .env to run the examples.")
+if "PAI_URL" not in os.environ:
+    raise KeyError("PAI_URL must be defined in .env to run the examples.")
+
+# Client initialization
+client = PAIClient(url=os.environ["PAI_URL"], api_key=os.environ["API_KEY"])
 
 
 # Here is the same text we are going to analyze. In this example we will block Names, Locations, and Cities.
@@ -30,13 +29,13 @@ sample_text = "My name is John and my friend is Grace and we live in Barcelona, 
 sample_entity_type_selector = request_objects.entity_type_selector_obj(
     type="ENABLE", value=["NAME", "LOCATION","LOCATION_CITY"])
 
-#this is a block filter where you can define strings or regex patterns to block
+# This is a block filter where you can define strings or regex patterns to block
 block_string = request_objects.filter_selector_obj(
     type="BLOCK", entity_type="CUSTOM_ENTITY", pattern="I SHOULD BLOCK THIS"
 )
 
-#similarily, this is an allow list. In this case I want to always allow Barcelona to pass 
-#but no other location
+# Similarily, this is an allow list. In this case I want to always allow Barcelona to pass 
+# but no other location
 allow_string = request_objects.filter_selector_obj(
     type="ALLOW", pattern="Barcelona"
 )

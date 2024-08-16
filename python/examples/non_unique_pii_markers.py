@@ -1,36 +1,35 @@
-# Example script to illustrate how to make API calls to the Private AI Docker
-# container to deidentify a text using the non-unique PII markers feature.
-#
-# To use this script, please start the Docker container locally, as per the
-# instructions at https://private-ai.com/docs/installation.
-#
-# In order to use the API key issued by Private AI, you can run the script as
-# `API_KEY=<your key here> python non_unique_pii_markers.py` or you can define a
-# `.env` file which has the line`API_KEY=<your key here>`.
+# Example script to illustrate how to make API calls to the Private AI API
+# to deidentify text using the non-unique PII markers feature.
 
-import os
 import dotenv
+import os
 from privateai_client import PAIClient, request_objects
 
-# Use to load the API KEY for authentication
+# Use to load the API KEY and URL
 dotenv.load_dotenv()
 
-# On initialization
-client = PAIClient("http", "localhost", "8080", api_key=os.environ["API_KEY"])
+# Check if the API_KEY and PAI_URL environment variables are set
+if "API_KEY" not in os.environ:
+    raise KeyError("API_KEY must be defined in .env to run the examples.")
+if "PAI_URL" not in os.environ:
+    raise KeyError("PAI_URL must be defined in .env to run the examples.")
 
-process_text_request = {
-    "text": [
-        "Hello, my name is May. I am the aunt of Pieter Parker. We live in Toronto, Canada."
-    ],
-    "link_batch": False,
-    "entity_detection": {
-        "return_entity": True
-    },
-    "processed_text": {
-        "type": "MARKER",
-        "pattern": "[BEST_ENTITY_TYPE]"
-    }
-}
+# Client initialization
+client = PAIClient(url=os.environ["PAI_URL"], api_key=os.environ["API_KEY"])
+
+sample_text = "Hello, my name is May. I am the aunt of Pieter Parker. We live in Toronto, Canada."
+sample_entity_detection = request_objects.entity_detection_obj(return_entity=True)
+sample_processed_text = request_objects.processed_text_obj(
+    type="MARKER",
+    pattern="[BEST_ENTITY_TYPE]"
+)
+
+process_text_request = request_objects.process_text_obj(
+    text=[sample_text],
+    link_batch=False,
+    entity_detection=sample_entity_detection,
+    processed_text=sample_processed_text
+)
 
 response = client.process_text(process_text_request)
 print(response.processed_text)

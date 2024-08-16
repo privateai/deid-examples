@@ -1,40 +1,47 @@
-# Example script to illustrate how to make API calls to the Private AI Docker
-# container to deidentify a text using the unique PII markers feature (default).
-#
-# To use this script, please start the Docker container locally, as per the
-# instructions at https://private-ai.com/docs/installation.
-#
-# In order to use the API key issued by Private AI, you can run the script as
-# `API_KEY=<your key here> python process_file_base64.py` or you can define a
-# `.env` file which has the line`API_KEY=<your key here>`.
+# Example script to illustrate how to make API calls to the Private AI API
+# to deidentify text using the unique PII markers feature.
 
-from privateai_client import PAIClient
-from privateai_client.objects import request_objects
+
 import base64
+import dotenv
 import os
-import logging
 
-file_dir = "/path/to/your/file"
-file_name = 'sample_file.pdf'
-filepath = os.path.join(file_dir, file_name)
-file_type = "type/of_file"  # eg. application/pdf
-client = PAIClient("http", "localhost", "8080")
+from privateai_client import PAIClient, request_objects
+
+input_file_dir = "examples/data"
+output_file_dir = "examples/output"
+file_name = "PAI_SYNTH_EN_medical-referral_2.pdf"
+filepath = os.path.join(input_file_dir, file_name)
+file_type = "application/pdf"
+
+# Use to load the API KEY and URL
+dotenv.load_dotenv()
+
+# Check if the API_KEY and PAI_URL environment variables are set
+if "API_KEY" not in os.environ:
+    raise KeyError("API_KEY must be defined in .env to run the examples.")
+if "PAI_URL" not in os.environ:
+    raise KeyError("PAI_URL must be defined in .env to run the examples.")
+
+# Client initialization
+client = PAIClient(url=os.environ["PAI_URL"], api_key=os.environ["API_KEY"])
 
 # Read from file
 with open(filepath, "rb") as b64_file:
     file_data = base64.b64encode(b64_file.read())
-    file_data = file_data.decode("ascii")
+    file_data = file_data.decode()
 
 # Make the request
 file_obj = request_objects.file_obj(data=file_data, content_type=file_type)
 request_obj = request_objects.file_base64_obj(file=file_obj)
 resp = client.process_files_base64(request_object=request_obj)
+
 if not resp.ok:
-    logging.error(
-        f"response for file {file_name} returned with {resp.status_code}")
+    print(f"response for file {file_name} returned with {resp.status_code}")
 
 # Write to file
-with open(os.path.join(file_dir, f"redacted-{file_name}"), 'wb') as redacted_file:
-    processed_file = resp.processed_file.encode("ascii")
+with open(os.path.join(output_file_dir, f"redacted-{file_name}"), 'wb') as redacted_file:
+    processed_file = resp.processed_file
     processed_file = base64.b64decode(processed_file, validate=True)
     redacted_file.write(processed_file)
+    print(f"File redaction completed: {redacted_file.name}")

@@ -1,5 +1,5 @@
 # Example script to illustrate how to make API calls to the Private AI API
-# to deidentify text using the batching feature.
+# to deidentify text using the synthetic entity generation feature.
 
 import dotenv
 import os
@@ -17,18 +17,18 @@ if "PAI_URL" not in os.environ:
 # Client initialization
 client = PAIClient(url=os.environ["PAI_URL"], api_key=os.environ["API_KEY"])
 
-entity_detection_obj = request_objects.entity_detection_obj(return_entity=True)
-
-processed_text_obj = request_objects.processed_text_obj(type="MARKER")
-
+sample_text = "Hello, my name is May. I am the aunt of Pieter Parker. We live in Toronto, Canada."
+sample_entity_detection = request_objects.entity_detection_obj(return_entity=True)
+sample_processed_text = request_objects.processed_text_obj(
+    type="SYNTHETIC",
+    synthetic_entity_accuracy="standard",
+    preserve_relationships=True
+)
 process_text_request = request_objects.process_text_obj(
-    text=["Hi, my name is Penelope, could you tell me your phone number please?",
-          "Sure, x234",
-          "and your DOB please?",
-          "fourth of Feb nineteen 86"],
-    link_batch=True,
-    entity_detection=entity_detection_obj,
-    processed_text=processed_text_obj
+   text=[sample_text],
+   link_batch=False,
+   entity_detection=sample_entity_detection,
+   processed_text=sample_processed_text
 )
 
 response = client.process_text(process_text_request)
