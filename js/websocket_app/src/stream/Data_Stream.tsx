@@ -25,7 +25,6 @@ function Data_Stream() {
         const inputText = event.target.value;
         if (/\s$/.test(inputText)) {
             if (readyState == ReadyState.OPEN) {
-                console.log({ text: inputText });
                 sendJsonMessage({ text: inputText });
             }
         }
