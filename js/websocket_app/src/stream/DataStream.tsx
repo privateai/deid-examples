@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 
-function Data_Stream() {
-    const [displayText, setDisplayText] = useState('');
+function DataStream() {
     const [websocketUrl, setWebsocketUrl] = useState('ws://localhost:8080/ws');
     const {
         sendJsonMessage,
@@ -13,13 +12,15 @@ function Data_Stream() {
         shouldReconnect: () => true,
     });
 
-    const connectionStatus = {
+    const CONNECTION_STATUS = {
         [ReadyState.CLOSED]: 'Closed',
         [ReadyState.CLOSING]: 'Closing',
         [ReadyState.CONNECTING]: 'Connecting',
         [ReadyState.OPEN]: 'Open',
         [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-    }[readyState];
+    } as const;
+
+    const connectionStatus = CONNECTION_STATUS[readyState];
 
     const handleInputChange = (event: any) => {
         const inputText = event.target.value;
@@ -30,11 +31,7 @@ function Data_Stream() {
         }
     };
 
-    useEffect(() => {
-        if (lastJsonMessage) {
-            setDisplayText(JSON.stringify(lastJsonMessage, undefined, 2))
-        }
-    }, [lastJsonMessage])
+    const displayText = lastJsonMessage ? JSON.stringify(lastJsonMessage, undefined, 2) : "";
 
     return (
         <div style={{margin: '20px'}}>
@@ -55,10 +52,10 @@ function Data_Stream() {
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
                 <textarea
-                    style={{ width: '50%', height: '500px', resize: 'none', padding: '10px' }}
+                    style={{ width: '50%', height: '500px', resize: 'none', padding: '10px', overflowY: 'auto' }}
                     onChange={handleInputChange}
                 />
-                <div style={{ width: '50%', height: '500px', border: '1px solid #ccc', padding: '10px' }}>
+                <div style={{ width: '50%', height: '500px', border: '1px solid #ccc', padding: '10px', overflowY: 'auto' }}>
                     <pre>{displayText}</pre>
                 </div>
             </div>
@@ -66,4 +63,4 @@ function Data_Stream() {
     );
 }
 
-export default Data_Stream;
+export default DataStream;

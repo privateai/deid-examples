@@ -1,8 +1,8 @@
-import Data_Stream from './stream/Data_Stream';
+import DataStream from './stream/DataStream';
  
 function App() {
     return (
-        <Data_Stream />
+        <DataStream />
     );
 }
 
