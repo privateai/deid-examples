@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 
+
+const CONNECTION_STATUS = {
+    [ReadyState.CLOSED]: 'Closed',
+    [ReadyState.CLOSING]: 'Closing',
+    [ReadyState.CONNECTING]: 'Connecting',
+    [ReadyState.OPEN]: 'Open',
+    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+} as const;
+
+
 function DataStream() {
     const [websocketUrl, setWebsocketUrl] = useState('ws://localhost:8080/ws');
     const {
@@ -11,14 +21,6 @@ function DataStream() {
         onOpen: () => console.log('opened'),
         shouldReconnect: () => true,
     });
-
-    const CONNECTION_STATUS = {
-        [ReadyState.CLOSED]: 'Closed',
-        [ReadyState.CLOSING]: 'Closing',
-        [ReadyState.CONNECTING]: 'Connecting',
-        [ReadyState.OPEN]: 'Open',
-        [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-    } as const;
 
     const connectionStatus = CONNECTION_STATUS[readyState];
 
