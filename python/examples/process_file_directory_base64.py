@@ -74,11 +74,12 @@ for file_name in files:
         resp = client.process_files_base64(request_object=request_obj)
         if not resp.ok:
             print(f"response for file {file_name} returned with {resp.status_code}")
-
-        # Write to file
-        with open(os.path.join(output_dir_path, f"redacted-{file_name}"), 'wb') as redacted_file:
-            processed_file = resp.processed_file.encode()
-            processed_file = base64.b64decode(processed_file, validate=True)
-            redacted_file.write(processed_file)
+        else:
+            # Write to file
+            with open(os.path.join(output_dir_path, f"redacted-{file_name}"), 'wb') as redacted_file:
+                processed_file = resp.processed_file.encode()
+                processed_file = base64.b64decode(processed_file, validate=True)
+                redacted_file.write(processed_file)
+                print(f"File redaction completed: {redacted_file.name}")
     else:
         print(f"File {file_name} not supported and will not be redacted.")

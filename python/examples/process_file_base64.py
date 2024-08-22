@@ -1,5 +1,5 @@
 # Example script to illustrate how to make API calls to the Private AI API
-# to deidentify text using the unique PII markers feature.
+# to deidentify a provided file via base64 encoding.
 
 
 import base64
