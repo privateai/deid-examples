@@ -12,7 +12,7 @@ dotenv.config();
 function sync_batching() {
   console.log("***** Sync batching *****");
   axios.post(
-    `${process.env.PAI_URL}/v3/process/text`,
+    `${process.env.PAI_URL}/process/text`,
     {
       text: [
         "Hi, my name is Penelope, could you tell me your phone number please?",
@@ -49,7 +49,7 @@ async function async_batching() {
   console.log("***** Async batching *****");
   try {
     const result = await axios.post(
-      `${process.env.PAI_URL}/v3/process/text`,
+      `${process.env.PAI_URL}/process/text`,
       {
         text: [
           "Hi, my name is Penelope, could you tell me your phone number please?",
