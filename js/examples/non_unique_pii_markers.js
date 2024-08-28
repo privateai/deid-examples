@@ -12,7 +12,7 @@ dotenv.config();
 function sync_non_unique_pii_markers() {
   console.log("***** Sync non-unique PII markers *****");
   axios.post(
-    `${process.env.PAI_URL}/v3/process/text`,
+    `${process.env.PAI_URL}/process/text`,
     {
       text: ["My name is John and my friend is Grace"],
       link_batch: false,
@@ -44,7 +44,7 @@ async function async_non_unique_pii_markers() {
   console.log("***** Async non-unique PII markers *****");
   try {
     const result = await axios.post(
-      `${process.env.PAI_URL}/v3/process/text`,
+      `${process.env.PAI_URL}/process/text`,
       {
         text: ["My name is John and my friend is Grace"],
         link_batch: false,

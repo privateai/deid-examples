@@ -12,7 +12,7 @@ dotenv.config();
 function sync_synthetic_entity_generation() {
   console.log("***** Sync synthetic entity generation *****");
   axios.post(
-    `${process.env.PAI_URL}/v3/process/text`,
+    `${process.env.PAI_URL}/process/text`,
     {
       text: ["My name is John and my friend is Grace and we live in Barcelona"],
       link_batch: false,
@@ -45,7 +45,7 @@ async function async_synthetic_entity_generation() {
   console.log("***** Async synthetic entity generation *****");
   try {
     const result = await axios.post(
-      `${process.env.PAI_URL}/v3/process/text`,
+      `${process.env.PAI_URL}/process/text`,
       {
         text: [
           "My name is John and my friend is Grace and we live in Barcelona",

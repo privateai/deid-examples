@@ -20,7 +20,7 @@ async def async_aiohttp_call() -> None:
 
         # create an asynchronous aiohttp post call, done outside the private ai client to use aiohttp
         async with session.post(
-            url=f"{os.environ["PAI_URL"]}/v3/process/text",
+            url=f"{os.environ["PAI_URL"]}/process/text",
             json={
                 "text": ["My name is John and my friend is Grace."],
             },
@@ -46,7 +46,7 @@ async def async_post(
 
 async def async_requests_call() -> None:
     response = await async_post(
-        url=f"{os.environ["PAI_URL"]}/v3/process/text",
+        url=f"{os.environ["PAI_URL"]}/process/text",
         json={
             "text": ["My name is John and my friend is Grace."]
         },
