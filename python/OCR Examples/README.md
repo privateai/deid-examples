@@ -4,4 +4,5 @@ This folder contains a set of examples for using Azure OCR service in conjunctio
 
 ## Contents in this directory
 
-1. docker-compose files to manage deid container and Azure Computer Vision container
+1. docker-compose file to manage deid container
+1. docker-compose file to manage deid and Azure Computer Vision container
