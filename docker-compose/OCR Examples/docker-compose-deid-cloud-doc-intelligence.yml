@@ -1,0 +1,29 @@
+### DEID Container with cloud Azure Document Intelligence Service**
+### Replace placeholders (e.g., `<Azure Document Intelligence Service URL>`) with your actual service details.
+version: '3.8'
+services:
+  deid_service:
+    image: crprivateaiprod.azurecr.io/deid:gpu
+    shm_size: "4g"
+    container_name: deid_container
+    tty: true
+    environment:
+      - PAI_OCR_SYSTEM=azure_doc_intelligence
+      - PAI_AZ_DOCUMENT_INTELLIGENCE_URL=<Azure Document Intelligence Service URL>
+      - PAI_AZ_DOCUMENT_INTELLIGENCE_KEY=<Azure Document Intelligence Key>
+      - PAI_OUTPUT_FILE_DIR=<output file directory>
+    ports:
+      - "8080:8080"
+    # Input and output directories are only required when using URI file processing
+    volumes:
+      - <path to license.json>:/app/license/license.json
+      - <input file directory>:<input file directory>
+      - <output file directory>:<output file directory>  # This directory should be same as PAI_OUTPUT_FILE_DIR
+    # comment out this section if you're using a CPU version of deid container.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

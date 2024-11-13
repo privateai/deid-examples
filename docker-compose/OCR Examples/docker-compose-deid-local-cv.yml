@@ -1,0 +1,42 @@
+### DEID Container with On-Premise Azure Computer Vision Service**
+version: '3.8'
+services:
+  deid_service:
+    image: crprivateaiprod.azurecr.io/deid:gpu
+    shm_size: "4g"
+    container_name: deid_container
+    tty: true
+    environment:
+      - PAI_OCR_SYSTEM=azure
+      - PAI_AZ_COMPUTER_VISION_URL=http://azure_vision_service:5000
+      - PAI_AZ_COMPUTER_VISION_KEY=<Azure Computer Vision Key>
+      - PAI_OUTPUT_FILE_DIR=<output file directory>
+    ports:
+      - "8080:8080"
+    # Input and output directories are only required when using URI file processing
+    volumes:
+      - <path to license.json>:/app/license/license.json
+      - <input file directory>:<input file directory>
+      - <output file directory>:<output file directory>  # This directory should be same as PAI_OUTPUT_FILE_DIR
+    # comment out this section if you're using a CPU version of deid container.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  azure_vision_service:
+    image: mcr.microsoft.com/azure-cognitive-services/vision/read:latest
+    container_name: azure_vision_container
+    tty: true
+    environment:
+      - Eula=accept
+      - Billing=<Azure Computer Vision Resource Endpoint>
+      - ApiKey=<Azure Computer Vision Resource Key>
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+          cpus: '8'
