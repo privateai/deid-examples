@@ -42,8 +42,7 @@ samples = [
 sample_entity_detection = request_objects.entity_detection_obj(return_entity=True)
 
 for sample in samples:
-    text = sample["text"]
-    words = sample["words"]
+    text, words = sample["text"], sample["words"]
 
     process_text_request = request_objects.ner_text_obj(
         text=[text],
@@ -52,16 +51,18 @@ for sample in samples:
 
     response = client.ner_text(process_text_request)
 
-    entities = sorted(response.entities[0], key=lambda e: (e["location"]["stt_idx"], -e["location"]["end_idx"], len(e["label"])))
+    entities = response.entities[0]
 
-    # calculate Damereu Lenvenshtien distance between detected entities and each word
-    for entity in entities:
-        entity["distances"] = [damerau_levenshtein_distance(entity["text"], word) for word in words]
-
-    # replace the entity with the word with if the distance is less than a threshold
     threshold = 2
     for entity in entities:
-        entity["text"] = words[entity["distances"].index(min(entity["distances"]))] if min(entity["distances"]) <= threshold else entity["text"]
+        # calculate Damereu Lenvenshtien distance between detected entities and each word
+        distances = [damerau_levenshtein_distance(entity["text"], word) for word in words]
+
+        # get the index of the word with the minimum distance
+        min_dist_idx = distances.index(min(distances))
+
+        # replace the detected entity with the word with the minimum distance if the distance is less than the threshold
+        entity["text"] = words[min_dist_idx] if min(distances) <= threshold else entity["text"]
 
     redacted_chunks = [NotComparable(c) for c in text]
 
