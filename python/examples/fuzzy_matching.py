@@ -27,7 +27,6 @@ class NotComparable(str):
         """Turns a string (_e.g._, a string literal like "e") which would otherwise compare equal to itself non-comparable"""
         def __init__(self, value: str):
             self.value = value
-
 samples = [
     {
         "text": "My name is John and my friend is Grace and we live in Barcelonnaa, not Torotno. I would like to move to Madrid.",
@@ -55,14 +54,17 @@ for sample in samples:
 
     threshold = 2
     for entity in entities:
-        # calculate Damereu Lenvenshtien distance between detected entities and each word
+        # calculate Damerau Lenvenshtien distance between detected entities and each word
         distances = [damerau_levenshtein_distance(entity["text"], word) for word in words]
 
+        # get the minimum distance
+        min_dist = min(distances)
+
         # get the index of the word with the minimum distance
-        min_dist_idx = distances.index(min(distances))
+        min_dist_idx = distances.index(min_dist)
 
         # replace the detected entity with the word with the minimum distance if the distance is less than the threshold
-        entity["text"] = words[min_dist_idx] if min(distances) <= threshold else entity["text"]
+        entity["text"] = words[min_dist_idx] if min_dist <= threshold else entity["text"]
 
     redacted_chunks = [NotComparable(c) for c in text]
 
