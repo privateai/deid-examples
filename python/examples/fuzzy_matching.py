@@ -40,12 +40,9 @@ class NotComparable(str):
                 other (object): The object to compare this instance with.
 
             Returns:
-                bool: False if the other object is a NotComparable instance (ensuring non-comparability), 
-                    NotImplemented for other object types.
+                bool: Always returns False to ensure non-comparability.
             """
-            if isinstance(other, NotComparable):
-                return False
-            return NotImplemented
+            return False
 
 
 samples = [
