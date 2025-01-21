@@ -81,7 +81,7 @@ for sample in samples:
     threshold = 2
     masking_character = '#'
     for entity in entities:
-        # calculate Damerau Lenvenshtien distance between the detected entities and each word
+        # calculate Damerau Levenshtein distance between the detected entities and each word
         distances = [damerau_levenshtein_distance(entity["text"], value) for value in entity_values]
 
         # get the minimum distance
