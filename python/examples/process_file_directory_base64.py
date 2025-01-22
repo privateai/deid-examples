@@ -10,8 +10,8 @@ from privateai_client.objects import request_objects
 from os import listdir
 from os.path import isfile, join
 
-input_dir_path = "examples/data"
-output_dir_path = "examples/output"
+INPUT_DIR_PATH = "examples/data"
+OUTPUT_DIR_PATH = "examples/output"
 
 # Supported file types as of March 2024
 file_type_dict = {
@@ -54,13 +54,13 @@ if "PAI_URL" not in os.environ:
 client = PAIClient(url=os.environ["PAI_URL"], api_key=os.environ["API_KEY"])
 
 # Gather all files in directory
-files = [file for file in listdir(input_dir_path) if isfile(join(input_dir_path, file))]
+files = [file for file in listdir(INPUT_DIR_PATH) if isfile(join(INPUT_DIR_PATH, file))]
 
 for file_name in files:
     
     file_ext = file_name[file_name.rfind("."):] # Gets the file extension
     if file_ext in file_type_dict:
-        filepath = os.path.join(input_dir_path, file_name)
+        filepath = os.path.join(INPUT_DIR_PATH, file_name)
         file_type = file_type_dict[file_ext]
 
         # Read from file
@@ -76,7 +76,7 @@ for file_name in files:
             print(f"response for file {file_name} returned with {resp.status_code}")
         else:
             # Write to file
-            with open(os.path.join(output_dir_path, f"redacted-{file_name}"), 'wb') as redacted_file:
+            with open(os.path.join(OUTPUT_DIR_PATH, f"redacted-{file_name}"), 'wb') as redacted_file:
                 processed_file = resp.processed_file.encode()
                 processed_file = base64.b64decode(processed_file, validate=True)
                 redacted_file.write(processed_file)
