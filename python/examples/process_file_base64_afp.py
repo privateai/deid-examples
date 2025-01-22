@@ -10,10 +10,10 @@ import requests
 from python.helpers import process_file_helpers
 
 PRIVATE_AI_URL = os.getenv('PAI_URL', 'http://localhost:8081')
+USER_ID = os.getenv('USER_ID', "default")
 
 file_name = "File Example PDF 1MB.pdf"
 filepath = os.path.join("./data", file_name)
-user_id = "michelle"
 
 # Read from file
 with open(filepath, "rb") as b64_file:
@@ -28,7 +28,7 @@ request_data = {
 
 print("Processing ", file_name, "...")
 stt = time.time()
-resp = requests.post(f"{PRIVATE_AI_URL}/process/files/base64", json=request_data, headers={"user-id": user_id})
+resp = requests.post(f"{PRIVATE_AI_URL}/process/files/base64", json=request_data, headers={"user-id": USER_ID})
 
 if not resp.ok:
     print(f"Response for file {file_name} returned with {resp.status_code}")
@@ -42,7 +42,7 @@ if not job_id:
 
 # Poll for job completion
 while True:
-    status_resp = requests.get(f"{PRIVATE_AI_URL}/jobs/{job_id}/state", headers={"user-id": user_id})
+    status_resp = requests.get(f"{PRIVATE_AI_URL}/jobs/{job_id}/state", headers={"user-id": USER_ID})
     if status_resp.ok:
         status_data = status_resp.json()
         print(f"Current status: {status_data['state']}")
