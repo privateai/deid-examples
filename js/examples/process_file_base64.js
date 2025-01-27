@@ -15,7 +15,7 @@ const b64file = fs.readFileSync("examples/sample.txt", {encoding: "base64"});
 function sync_process_file_base64() {
   console.log("***** Sync process file base64 *****");
   axios.post(
-    `${process.env.PAI_URL}/v3/process/files/base64`,
+    `${process.env.PAI_URL}/process/files/base64`,
     {
       file: {
         data: b64file,
@@ -41,7 +41,7 @@ async function async_process_file_base64() {
   console.log("***** Async process file base64 *****");
   try {
     const result = await axios.post(
-      `${process.env.PAI_URL}/v3/process/files/base64`,
+      `${process.env.PAI_URL}/process/files/base64`,
       {
         file: {
           data: b64file,

@@ -1,6 +1,6 @@
 # This script presumes you are running the Private AI container locally on port 8080
 # If this is not the case, update the uri below
-$uri = "http://localhost:8080/v3/process/text"
+$uri = "http://localhost:8080/process/text"
 
 $body = @{
     'text' = @(

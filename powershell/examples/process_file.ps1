@@ -1,6 +1,6 @@
 # This script presumes you are running the Private AI container locally on port 8080
 # If this is not the case, update the uri below
-$uri = "http://localhost:8080/v3/process/files/base64"
+$uri = "http://localhost:8080/process/files/base64"
 
 # The example uses a PDF in an input folder
 $filename = "C:\input\sample.pdf"

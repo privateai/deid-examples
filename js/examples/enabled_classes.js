@@ -12,7 +12,7 @@ dotenv.config();
 function sync_enabled_classes() {
   console.log("***** Sync enabled classes *****");
   axios.post(
-    `${process.env.PAI_URL}/v3/process/text`,
+    `${process.env.PAI_URL}/process/text`,
     {
       text: ["My name is John and my friend is Grace and we live in Barcelona"],
       link_batch: false,
@@ -50,7 +50,7 @@ async function async_enabled_classes() {
   console.log("***** Async enabled classes *****");
   try {
     const result = await axios.post(
-      `${process.env.PAI_URL}/v3/process/text`,
+      `${process.env.PAI_URL}/process/text`,
       {
         text: [
           "My name is John and my friend is Grace and we live in Barcelona",
