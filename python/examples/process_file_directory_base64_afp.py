@@ -8,13 +8,43 @@ import requests
 
 from os import listdir
 from os.path import isfile, join
-from python.helpers import process_file_helpers
-from python.data.file_types import SUPPORTED_FILE_TYPES
+from helpers import process_file_helpers
+# from python.data.file_types import SUPPORTED_FILE_TYPES
+from dotenv import load_dotenv
 
-PRIVATE_AI_URL = os.getenv('PAI_URL', 'http://localhost:8081')
-USER_ID = os.getenv('USER_ID', "default")
+load_dotenv()
+
+PRIVATE_AI_URL = os.getenv('PAI_URL')
+USER_ID = os.getenv('USER_ID')
 INPUT_DIR_PATH = "./data"
 OUTPUT_DIR_PATH = "./output"
+
+SUPPORTED_FILE_TYPES = {
+    ".pdf": "application/pdf",
+    ".json": "application/json",
+    ".xml": "application/xml",
+    ".csv": "text/csv",
+    ".doc": "application/msword",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".eml": "message/rfc822",
+    ".txt": "text/plain",
+    ".xls": "application/vnd.ms-excel",
+    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ".ppt": "application/vnd.ms-powerpoint",
+    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    ".dcm": "application/dicom",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".tif": "image/tiff",
+    ".tiff": "image/tiff",
+    ".png": "image/png",
+    ".bmp": "image/bmp",
+    ".wav": "audio/wav",
+    ".mp3": "audio/mpeg",
+    ".mp4": "audio/mp4",
+    ".m4a": "audio/m4a",
+    ".webm": "audio/webm",
+}
 
 # Gather all files in directory
 files = [file for file in listdir(INPUT_DIR_PATH) if isfile(join(INPUT_DIR_PATH, file))]
