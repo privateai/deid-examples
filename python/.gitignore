@@ -1,2 +1,3 @@
 # Ignore output files, these don't need to be checked in
 examples/output/*
+examples/data/*
