@@ -112,11 +112,13 @@ def get_file_contents(folder: str, files: list[str]) -> dict:
             with open(os.path.join(folder, file), "r") as f:
                 transcript_json = json.loads(f.read())
                 output["transcript"] = transcript_json
+        else:
+            print(f"--- Unexpected file, skipping: {file}")
 
     return output
 
 
-def get_words_and_timestamps(transcript_json) -> tuple[list[str], list[dict]]:
+def get_words_and_timestamps(transcript_json: dict) -> tuple[list[str], list[dict]]:
     """Extract the audio words and each corresponding timestamp from the transcript
 
     :param transcript_json: The transcript python object containing the words and timestamps
@@ -173,13 +175,20 @@ if __name__ == "__main__":
         }
 
         try:
+            audio_filename = file_contents["audio"]["filename"]
+            audio_ext = file_contents["audio"]["ext"]
+            audio_base64 = file_contents["audio"]["base64"]
+
             text_stt = time.time()
 
             # Send text transcript to de-identification service
             with session.post(url=PRIVATE_AI_TEXT_URL, headers=headers, json=request_text) as text_response:
                 print(f"--- Text completed: {time.time() - text_stt} seconds at {time.ctime()} ---")
 
-                if text_response.ok:
+                if not text_response.ok:
+                    log_failure_response(filename=audio_filename, response=text_response)
+
+                else:
                     text_response_json = text_response.json()
 
                     bleep_timestamps = []
@@ -191,14 +200,14 @@ if __name__ == "__main__":
 
                     # Write text output to file for reference
                     with open(
-                        os.path.join(LOG_DIRECTORY, file_contents["audio"]["filename"] + ".text_response.json"), "wt"
+                        os.path.join(LOG_DIRECTORY, audio_filename + ".text_response.json"), "wt"
                     ) as response_file:
                         response_file.write(json.dumps(text_response_json))
 
                     request_bleep = {
                         "file": {
-                            "data": file_contents["audio"]["base64"],
-                            "content_type": CONTENT_DICT[file_contents["audio"]["ext"]],
+                            "data": audio_base64,
+                            "content_type": CONTENT_DICT[audio_ext],
                         },
                         "timestamps": bleep_timestamps,
                         "bleep_gain": BLEEP_GAIN,
@@ -209,21 +218,22 @@ if __name__ == "__main__":
                     # Send audio file with timestamps for bleeping
                     with session.post(url=PRIVATE_AI_BLEEP_URL, headers=headers, json=request_bleep) as bleep_response:
                         print(f"--- File completed: {time.time() - bleep_stt} seconds at {time.ctime()} ---")
-                        if bleep_response.ok:
+
+                        if not bleep_response.ok:
+                            log_failure_response(filename=audio_filename, response=bleep_response)
+
+                        else:
+                            # Write the bleeped file to the target directory
+                            bleeped_decoded = base64.b64decode(bleep_response.json()["bleeped_file"])
+
                             with open(
                                 os.path.join(
                                     TARGET_DIRECTORY,
-                                    file_contents["audio"]["filename"] + ".redacted" + file_contents["audio"]["ext"],
+                                    audio_filename + ".redacted" + audio_ext,
                                 ),
                                 "wb",
                             ) as redacted_file:
-                                redacted_file.write(base64.b64decode(bleep_response.json()["bleeped_file"]))
-
-                        else:
-                            log_failure_response(filename=file_contents["audio"]["filename"], response=bleep_response)
-
-                else:
-                    log_failure_response(filename=file_contents["audio"]["filename"], response=text_response)
+                                redacted_file.write(bleeped_decoded)
 
         except Exception as e:
             print(f"Exception occurred: {e}")
