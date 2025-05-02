@@ -211,3 +211,4 @@ Resources:
     Properties:
       LogGroupName: !Sub ${EnvironmentName}-container
       RetentionInDays: 365
+
