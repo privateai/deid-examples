@@ -1,0 +1,213 @@
+Description: >
+  This represents the configuration for the Private AI service.
+
+Parameters:
+  EnvironmentName:
+    Description: An environment name that will be prefixed to resource names
+    Type: String
+
+  VPC:
+    Description: The VPC that the ECS cluster is deployed to
+    Type: AWS::EC2::VPC::Id
+
+  Cluster:
+    Description: Please provide the ECS Cluster ID that this service should run on
+    Type: String
+
+  DesiredCount:
+    Description: How many instances of this task should we run across our cluster?
+    Type: Number
+    Default: 1
+
+  Path:
+    Description: The path to register with the Application Load Balancer
+    Type: String
+    Default: /
+
+  TargetGroup:
+    Description: The target group for the load balancer to direct traffic to the ECS tasks
+    Type: String
+
+  ECSHostSecurityGroup:
+    Description: The Security Group for the ECS cluster hosts
+    Type: AWS::EC2::SecurityGroup::Id
+
+  PrivateSubnets:
+    Description: The private subnets for the tasks
+    Type: List<AWS::EC2::Subnet::Id>
+
+  ContainerName:
+    Description: The name of the Private AI container
+    Type: String
+    Default: privateai-deid
+
+  ECSExecutionRole:
+    Description: The execution role for the ECS Agent permissions
+    Type: String
+
+  ECSTaskRole:
+    Description: The task role for the Private AI container permissions
+    Type: String
+
+Resources:
+  # The main service object that holds reference to the tasks, load balancer, etc
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref Cluster
+      DesiredCount: !Ref DesiredCount
+      HealthCheckGracePeriodSeconds: 30
+      LaunchType: EC2
+      LoadBalancers:
+        - ContainerName: !Ref ContainerName
+          ContainerPort: 8080
+          TargetGroupArn: !Ref TargetGroup
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          SecurityGroups:
+            - !Ref ECSHostSecurityGroup
+          Subnets: !Ref PrivateSubnets
+      ServiceName: !Sub ${EnvironmentName}-service
+      TaskDefinition: !Ref TaskDefinition
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Service Role
+
+  LicenseEFSMountTarget1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !ImportValue ExportedLicenseEFSId
+      SubnetId: !Select [ 0, !Ref PrivateSubnets ]
+      SecurityGroups:
+        - !Ref ECSHostSecurityGroup
+
+  LicenseEFSMountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !ImportValue ExportedLicenseEFSId
+      SubnetId: !Select [ 1, !Ref PrivateSubnets ]
+      SecurityGroups:
+        - !Ref ECSHostSecurityGroup
+
+  InputEFSMountTarget1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !ImportValue ExportedInputEFSId
+      SubnetId: !Select [ 0, !Ref PrivateSubnets ]
+      SecurityGroups:
+        - !Ref ECSHostSecurityGroup
+
+  InputEFSMountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !ImportValue ExportedInputEFSId
+      SubnetId: !Select [ 1, !Ref PrivateSubnets ]
+      SecurityGroups:
+        - !Ref ECSHostSecurityGroup
+
+  OutputEFSMountTarget1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !ImportValue ExportedOutputEFSId
+      SubnetId: !Select [ 0, !Ref PrivateSubnets ]
+      SecurityGroups:
+        - !Ref ECSHostSecurityGroup
+
+  OutputEFSMountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !ImportValue ExportedOutputEFSId
+      SubnetId: !Select [ 1, !Ref PrivateSubnets ]
+      SecurityGroups:
+        - !Ref ECSHostSecurityGroup
+
+  # The task definition, which references the image, memory and CPU usage, 
+  # logging configuration, health checks, etc
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      ContainerDefinitions:
+        - Name: init-loader
+          Image: amazon/aws-cli
+          EntryPoint: [""]
+          Memory: 64
+          Command:
+            - "sh"
+            - "-c"
+            - |
+              aws s3 cp s3://<Your S3 bucket>/<your-license-file>.json /aws/license.json
+          Essential: false
+          Environment:
+            - Name: AWS_REGION
+              Value: us-east-1
+            - Name: AWS_ACCESS_KEY_ID
+              Value: <Your Key>
+            - Name: AWS_SECRET_ACCESS_KEY
+              Value: <Your secret>
+          MountPoints:
+            - SourceVolume: license-efs
+              ContainerPath: /aws
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudWatchLogsGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: !Ref EnvironmentName
+
+        - Essential: true
+          HealthCheck:
+            Command:
+              - CMD-SHELL
+              - curl -f http://localhost:8080/healthz || exit 1
+            Interval: 10
+            Retries: 3
+            StartPeriod: 30
+            Timeout: 5
+          Image: xxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/deid:cpu
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudWatchLogsGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: !Ref EnvironmentName
+          Memory: 63000
+          Name: !Ref ContainerName
+          Environment:
+            - Name: PAI_OUTPUT_FILE_DIR
+              Value: /output
+          PortMappings:
+            - AppProtocol: http
+              ContainerPort: 8080
+          MountPoints:
+            - SourceVolume: license-efs
+              ContainerPath: /app/license
+            - SourceVolume: host-input-efs
+              ContainerPath: /input
+            - SourceVolume: host-output-efs
+              ContainerPath: /output
+          DependsOn:
+            - ContainerName: init-loader
+              Condition: SUCCESS
+      ExecutionRoleArn: !Ref ECSExecutionRole
+      Family: !Sub ${EnvironmentName}-task
+      NetworkMode: awsvpc
+      TaskRoleArn: !Ref ECSTaskRole
+
+      Volumes:
+        - Name: license-efs
+          EFSVolumeConfiguration:
+            FilesystemId: !ImportValue ExportedLicenseEFSId
+            TransitEncryption: ENABLED
+        - Name: host-input-efs
+          Host:
+            SourcePath: /input
+        - Name: host-output-efs
+          Host:
+            SourcePath: /output
+
+  # Simple log configuration, this contains the application logs
+  CloudWatchLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub ${EnvironmentName}-container
+      RetentionInDays: 365

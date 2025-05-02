@@ -1,0 +1,267 @@
+Description: >
+  This template creates an auto scaling group based on a launch template, creates
+  an instance profile for the EC2 host, creates an ECS task execution role and task
+  role for ease of management, and then deploys the EC2 host as the base infrastructure
+  for the ECS cluster.
+
+Parameters:
+  EnvironmentName:
+    Description: An environment name that will be prefixed to resource names
+    Type: String
+
+  InstanceType:
+    Description: The instance type to use for the cluster hosts
+    Type: String
+    Default: m7i.4xlarge
+
+  ClusterMinSize:
+    Description: Initial minimum number of ECS hosts for deployment
+    Type: Number
+    Default: 0
+
+  ClusterMaxSize:
+    Description: Initial minimum number of ECS hosts for deployment
+    Type: Number
+    Default: 1
+    
+  ClusterDesiredSize:
+    Description: Initial minimum number of ECS hosts for deployment
+    Type: Number
+    Default: 1
+    
+  VPC:
+    Description: The VPC for the cluster
+    Type: AWS::EC2::VPC::Id
+
+  PrivateSubnets:
+    Description: The private subnets for the cluster hosts
+    Type: List<AWS::EC2::Subnet::Id>
+
+  ECSHostSecurityGroup:
+    Description: The Security Group for the ECS cluster hosts
+    Type: AWS::EC2::SecurityGroup::Id
+
+  ECSAMI:
+    Description: ECS-Optimized AMI ID
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id
+  
+  SSHKeyName:
+    Description: SSH KeyName to connect to ECS cluster hosts
+    Type: AWS::EC2::KeyPair::KeyName
+
+Resources:
+  # This cluster resource holds all other resources
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub ${EnvironmentName}-cluster
+
+  LicenseEFS:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      Encrypted: true
+
+  InputEFS:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      Encrypted: true
+
+  OutputEFS:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      Encrypted: true
+
+  # This instance profile is required for the EC2 host used in the ECS cluster
+  ECSInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles:
+        - !Ref ECSInstanceRole
+
+  # This defines the instance role that has the necessary permissions for the EC2 host
+  ECSInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${EnvironmentName}-ECSRole-${AWS::Region}
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Instance Role
+
+  # The auto scaling group properties used for the cluster hosts
+  # Note, the DependsOn clause is required during deprovisioning to 
+  # ensure the autoscaling group terminates the underlying EC2 hosts
+  # before the ECS Cluster is destroyed
+  EC2AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    DependsOn: ECSCluster
+    Properties:
+      DefaultInstanceWarmup: 120
+      VPCZoneIdentifier: !Ref PrivateSubnets
+      LaunchTemplate: 
+        LaunchTemplateId: !Ref EC2LaunchTemplate
+        Version: !GetAtt EC2LaunchTemplate.LatestVersionNumber
+      MinSize: !Ref ClusterMinSize
+      MaxSize: !Ref ClusterMaxSize
+      DesiredCapacity: !Ref ClusterDesiredSize
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName} ECS host
+          PropagateAtLaunch: true
+
+  # The launch template to be used for the EC2 instances
+  EC2LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Sub ${EnvironmentName}-lt
+      LaunchTemplateData: 
+        BlockDeviceMappings:
+          - Ebs:
+              VolumeSize: 50
+              VolumeType: gp3
+              DeleteOnTermination: true
+            DeviceName: /dev/xvda
+        ImageId: !Ref ECSAMI
+        InstanceType: !Ref InstanceType
+        IamInstanceProfile:
+          Arn: !GetAtt ECSInstanceProfile.Arn
+        KeyName: !Ref SSHKeyName
+        NetworkInterfaces:
+          - AssociatePublicIpAddress: false
+            DeleteOnTermination: true
+            DeviceIndex: 0
+            Groups:
+            - !Ref ECSHostSecurityGroup
+        UserData: 
+          Fn::Base64:
+            !Sub
+              - |
+                #!/bin/bash -xe
+                cat << EOF >> /etc/ecs/ecs.config
+                ECS_CLUSTER=${EnvironmentName}-cluster
+                EOF
+                mkdir -p /input
+                mkdir -p /output
+                sudo chown -R ec2-user:ec2-user /input
+                sudo chown -R ec2-user:ec2-user /output
+                mount -t efs -o tls ${InputEFSId}:/ /input
+                mount -t efs -o tls ${OutputEFSId}:/ /output
+              - InputEFSId: !Ref InputEFS
+                OutputEFSId: !Ref OutputEFS
+
+  # The capacity provider which automates the provisioning of hosts to
+  # meet the demands of the cluster services and tasks
+  ECSCapacityProvider:
+    Type: AWS::ECS::CapacityProvider
+    Properties: 
+      AutoScalingGroupProvider: 
+        AutoScalingGroupArn: !Ref EC2AutoScalingGroup
+      Name: !Sub cp-${EnvironmentName}
+      Tags: 
+        - Key: Name
+          Value: !Sub ${EnvironmentName} Capacity Provider
+
+  # The capacity provider association must be created separately to enable
+  # provisioning and deprovisioning via cloudformation
+  ECSCapacityProviderAssociation:
+    Type: AWS::ECS::ClusterCapacityProviderAssociations
+    Properties:
+      CapacityProviders:
+        - !Ref ECSCapacityProvider
+      Cluster: !Ref ECSCluster
+      DefaultCapacityProviderStrategy:
+        - CapacityProvider: !Ref ECSCapacityProvider
+
+  # This IAM Role grants the ECS agent running on the host access to AWS services
+  # Note, this role seems to be attached to the agent at init, so it messes up permissions
+  # if this exists in the service template
+  ECSExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${EnvironmentName}-ExecutionRole-${AWS::Region}
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Path: /
+
+  # This IAM Role grants the Private AI container access to AWS Marketplace in order
+  # to register usage and enable the license
+  ECSTaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${EnvironmentName}-TaskRole-${AWS::Region}
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSMarketplaceMeteringRegisterUsage
+      Path: /
+      Policies:
+        - PolicyName: EFSAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - elasticfilesystem:ClientMount
+                  - elasticfilesystem:ClientWrite
+                  - elasticfilesystem:ClientRootAccess
+                  - elasticfilesystem:DescribeFileSystems
+                  - elasticfilesystem:DescribeMountTargets
+                Resource: "*"
+
+Outputs:
+  Cluster:
+    Description: A reference to the ECS cluster
+    Value: !Ref ECSCluster
+
+  ECSExecutionRole:
+    Description: The role with the required permissions for the ECS Agent
+    Value: !Ref ECSExecutionRole
+  
+  ECSTaskRole:
+    Description: The role with the required permissions for the Private AI task
+    Value: !Ref ECSTaskRole
+  
+  LicenseEFSId:
+    Value: !Ref LicenseEFS
+    Export:
+      Name: ExportedLicenseEFSId
+
+  InputEFSId:
+    Value: !Ref InputEFS
+    Export:
+      Name: ExportedInputEFSId
+
+  OutputEFSId:
+    Value: !Ref OutputEFS
+    Export:
+      Name: ExportedOutputEFSId
