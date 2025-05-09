@@ -90,14 +90,12 @@ def download_file(job_id: str, output_file_name: str) -> None:
         print(f"Successfully downloaded redacted file: Redacted {output_file_name}")
 
 
-def process_file(file_name: str) -> None:
-    print(f"Processing {file_name}")
-
+def get_file_request(file_name: str) -> dict:
     # Opening file to build request json
     _, ext = os.path.splitext(file_name)
 
     if ext not in SUPPORTED_FILE_TYPES:
-        raise ValueError(f"File {file_name} not supported and will not be deidentified.")
+        raise ValueError(f"File type {ext} not supported and will not be deidentified.")
     else:
         filepath = os.path.join(INPUT_DIR_PATH, file_name)
         file_type = SUPPORTED_FILE_TYPES[ext]
@@ -106,12 +104,17 @@ def process_file(file_name: str) -> None:
         with open(filepath, "rb") as b64_file:
             file_data = base64.b64encode(b64_file.read()).decode()
 
-        request_data = {
+        return {
             "file": {
                 "data": file_data,
                 "content_type": file_type,
             }
         }
+
+
+def process_file(file_name: str) -> None:
+    print(f"Processing {file_name}")
+    request_data = get_file_request(file_name)
 
     # Submit file for processing and get job id
     job_id = submit_job(request_data)
