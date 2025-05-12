@@ -1,0 +1,66 @@
+# This file stores values to propagate to each CloudFormation stack
+# as your valiable store.
+# Change <value> to desired one including <>.
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  # Needed dummy entry
+  DummyResource:
+    Type: AWS::CloudFormation::WaitConditionHandle
+
+Outputs:
+  # AWS access settings
+  AWSRegion:
+    # Example: us-east-1
+    Value: <value>
+    Export:
+      Name: ExportedAWSRegion
+
+  AWSAccessKey:
+    Value: <value>
+    Export:
+      Name: ExportedAWSAccessKey
+
+  AWSAccessSecret:
+    Value: <value>
+    Export:
+      Name: ExportedAWSAccessSecret
+
+  # Your company s3 bucket information
+  LicenseBucketName:
+    # s3 bucket name where the license file is placed 
+    # Example Value:
+    # mybucket
+    Value: <value>
+    Export:
+      Name: ExportedLicenseBucketName
+
+  # EC2 instance related settings
+  VolumeSize: 
+    # Example Value:
+    # 50  
+    Value: <value>
+    Export:
+      Name: ExportedVolumeSize
+
+  VolumeType: 
+    # Example Value:
+    # gp3  
+    Value: <value>
+    Export:
+      Name: ExportedVolumeType
+
+  InstanceType:
+    # Example Value:
+    # m7i.4xlarge  
+    Value: <value>
+    Export:
+      Name: ExportedInstanceType
+
+  # Private AI
+  PrivateAIImage:
+    # Example Value:
+    # 000000000000.dkr.ecr.us-east-1.amazonaws.com/deid:cpu  
+    Value: <value>
+    Export:
+      Name: ExportedPrivateAIImage

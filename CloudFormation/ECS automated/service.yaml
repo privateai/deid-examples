@@ -134,16 +134,17 @@ Resources:
           Command:
             - "sh"
             - "-c"
-            - |
-              aws s3 cp s3://<Your S3 bucket>/<your-license-file>.json /aws/license.json
+            - !Sub
+                - aws s3 cp s3://${LicenseBucketName}/license.json /aws/license.json
+                - { LicenseBucketName: !ImportValue ExportedLicenseBucketName }
           Essential: false
           Environment:
             - Name: AWS_REGION
-              Value: us-east-1
+              Value: !ImportValue ExportedAWSRegion
             - Name: AWS_ACCESS_KEY_ID
-              Value: <Your Key>
+              Value: !ImportValue ExportedAWSAccessKey
             - Name: AWS_SECRET_ACCESS_KEY
-              Value: <Your secret>
+              Value: !ImportValue ExportedAWSAccessSecret
           MountPoints:
             - SourceVolume: license-efs
               ContainerPath: /aws
@@ -163,7 +164,7 @@ Resources:
             Retries: 3
             StartPeriod: 30
             Timeout: 5
-          Image: xxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/deid:cpu
+          Image: !ImportValue ExportedPrivateAIImage
           LogConfiguration:
             LogDriver: awslogs
             Options:

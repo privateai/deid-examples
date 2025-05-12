@@ -12,8 +12,8 @@ Parameters:
   InstanceType:
     Description: The instance type to use for the cluster hosts
     Type: String
-    Default: m7i.4xlarge
-
+    Default: m7i.xlarge
+ 
   ClusterMinSize:
     Description: Initial minimum number of ECS hosts for deployment
     Type: Number
@@ -131,12 +131,12 @@ Resources:
       LaunchTemplateData: 
         BlockDeviceMappings:
           - Ebs:
-              VolumeSize: 50
-              VolumeType: gp3
+              VolumeSize: !ImportValue ExportedVolumeSize
+              VolumeType: !ImportValue ExportedVolumeType
               DeleteOnTermination: true
             DeviceName: /dev/xvda
         ImageId: !Ref ECSAMI
-        InstanceType: !Ref InstanceType
+        InstanceType: !ImportValue ExportedInstanceType
         IamInstanceProfile:
           Arn: !GetAtt ECSInstanceProfile.Arn
         KeyName: !Ref SSHKeyName

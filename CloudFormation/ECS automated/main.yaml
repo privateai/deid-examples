@@ -18,7 +18,16 @@ Parameters:
     Type: String
     Description: Name of the SSH Key to connect to ECS Hosts
 
+  TemplateFileBucketUri:
+    Type: String
+    Description: Uri for s3 bucket where customized template yaml are placed
+
 Resources:
+  NestedOutputs:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateFileBucketUri}/values.yaml"
+
   VPC:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -30,7 +39,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     DependsOn: VPC
     Properties:
-      TemplateURL: https://<Your S3 bucket>/security-groups.yaml
+      TemplateURL: !Sub "${TemplateFileBucketUri}/security-groups.yaml"
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         VPC: !GetAtt VPC.Outputs.VPC
@@ -63,7 +72,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     DependsOn: SecurityGroups
     Properties:
-      TemplateURL: https://<Your S3 bucket>/cluster.yaml
+      TemplateURL: !Sub "${TemplateFileBucketUri}/cluster.yaml"
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         VPC: !GetAtt VPC.Outputs.VPC
@@ -77,7 +86,7 @@ Resources:
       - LoadBalancer
       - Cluster
     Properties:
-      TemplateURL: https://<Your S3 bucket>/service.yaml
+      TemplateURL: !Sub "${TemplateFileBucketUri}/service.yaml"
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         VPC: !GetAtt VPC.Outputs.VPC
@@ -87,7 +96,6 @@ Resources:
         PrivateSubnets: !GetAtt VPC.Outputs.PrivateSubnets
         ECSExecutionRole: !GetAtt Cluster.Outputs.ECSExecutionRole
         ECSTaskRole: !GetAtt Cluster.Outputs.ECSTaskRole
-
 
 Outputs:
   PrivateAIUrl:
