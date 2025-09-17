@@ -16,4 +16,4 @@ It is also possible to use the Private AI cloud endpoint located at [https://por
 
 ## What are these examples?
 
-In the [JS](./js/examples/) folder where have common api call examples and use cases built in javascript. In the [python](./python/examples/) folder we have the same examples expressed in python. If you are interested in our [PrivateGPT](https://www.private-ai.com/products/privategpt-headless/) to work securely with LLMs, you should check out the [LLMs](./python/LLM%20Examples/) folder for some really cool stuff!
+In the [JS](./js/examples/) folder where have common api call examples and use cases built in javascript. In the [python](./python/examples/) folder we have the same examples expressed in python. If you are interested in working securely with LLMs, you should check out the [LLMs](./python/LLM%20Examples/) folder for some really cool stuff!
