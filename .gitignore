@@ -137,3 +137,5 @@ dmypy.json
 .idea
 .DS_Store
 
+Azure Template/azuredeploy_readme.md
+Azure Template/azuredeploy.parameters.json
