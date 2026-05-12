@@ -1,0 +1,232 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "description": "Azure ARM template for deploying Limina DEID on Azure Container Instances with Azure Files mounts for license storage."
+  },
+  "parameters": {
+    "environmentName": {
+      "type": "string",
+      "defaultValue": "limina",
+      "metadata": {
+        "description": "Environment name prefix used for Azure resources."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Azure region for deployment."
+      }
+    },
+    "containerGroupName": {
+      "type": "string",
+      "defaultValue": "[concat(parameters('environmentName'), '-aci')]",
+      "metadata": {
+        "description": "Name of the Azure Container Instance container group."
+      }
+    },
+    "containerImage": {
+      "type": "string",
+      "defaultValue": "<your-limina-container-image>",
+      "metadata": {
+        "description": "Limina container image URI to deploy."
+      }
+    },
+    "containerName": {
+      "type": "string",
+      "defaultValue": "limina-deid",
+      "metadata": {
+        "description": "Container name inside the container group."
+      }
+    },
+    "cpuCores": {
+      "type": "int",
+      "defaultValue": 4,
+      "metadata": {
+        "description": "CPU cores allocated to the container."
+      }
+    },
+    "memoryInGb": {
+      "type": "int",
+      "defaultValue": 16,
+      "metadata": {
+        "description": "Memory in GB allocated to the container."
+      }
+    },
+    "liminaPort": {
+      "type": "int",
+      "defaultValue": 8080,
+      "metadata": {
+        "description": "Port exposed by the Limina container."
+      }
+    },
+    "dnsNameLabel": {
+      "type": "string",
+      "defaultValue": "[concat(parameters('environmentName'), '-', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "DNS name label for the public ACI endpoint."
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "[toLower(concat(parameters('environmentName'), 'storage', uniqueString(resourceGroup().id)))]",
+      "maxLength": 24,
+      "minLength": 3,
+      "metadata": {
+        "description": "Name of the Azure Storage account used for Azure Files shares."
+      }
+    },
+    "storageAccountSku": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_ZRS",
+        "StandardV2_GRS"
+      ],
+      "metadata": {
+        "description": "Storage account SKU for Azure Files."
+      }
+    },
+    "licenseFileShareName": {
+      "type": "string",
+      "defaultValue": "license",
+      "metadata": {
+        "description": "Azure File share name used to store the Limina license file."
+      }
+    },
+    "licenseMountPath": {
+      "type": "string",
+      "defaultValue": "/app/license",
+      "metadata": {
+        "description": "Mount path inside the container for the license file share."
+      }
+    },
+    "registryServer": {
+      "type": "string",
+      "metadata": {
+        "description": "Container registry server URL (e.g., myregistry.azurecr.io)"
+      }
+    },
+    "registryUsername": {
+      "type": "secureString",
+      "metadata": {
+        "description": "Container registry username or service principal ID"
+      }
+    },
+    "registryPassword": {
+      "type": "secureString",
+      "metadata": {
+        "description": "Container registry password or service principal password"
+      }
+    }
+  },
+  "variables": {
+    "storageAccountResourceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2023-05-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('storageAccountSku')]"
+      },
+      "kind": "StorageV2",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2023-05-01",
+      "name": "[format('{0}/default/{1}', parameters('storageAccountName'), parameters('licenseFileShareName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2021-07-01",
+      "name": "[parameters('containerGroupName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/fileServices/shares', parameters('storageAccountName'), 'default', parameters('licenseFileShareName'))]"
+      ],
+      "properties": {
+        "containers": [
+          {
+            "name": "[parameters('containerName')]",
+            "properties": {
+              "image": "[parameters('containerImage')]",
+              "resources": {
+                "requests": {
+                  "cpu": "[parameters('cpuCores')]",
+                  "memoryInGb": "[parameters('memoryInGb')]"
+                }
+              },
+              "ports": [
+                {
+                  "protocol": "TCP",
+                  "port": "[parameters('liminaPort')]"
+                }
+              ],              
+              "volumeMounts": [
+                {
+                  "name": "license-volume",
+                  "mountPath": "[parameters('licenseMountPath')]"
+                }
+              ]
+            }
+          }
+        ],
+        "imageRegistryCredentials": [
+          {
+            "server": "[parameters('registryServer')]",
+            "username": "[parameters('registryUsername')]",
+            "password": "[parameters('registryPassword')]"
+          }
+        ],
+        "osType": "Linux",
+        "ipAddress": {
+          "type": "Public",
+          "ports": [
+            {
+              "protocol": "TCP",
+              "port": "[parameters('liminaPort')]"
+            }
+          ],
+          "dnsNameLabel": "[parameters('dnsNameLabel')]"
+        },
+        "restartPolicy": "Always",
+        "volumes": [
+          {
+            "name": "license-volume",
+            "azureFile": {
+              "shareName": "[parameters('licenseFileShareName')]",
+              "storageAccountName": "[parameters('storageAccountName')]",
+              "storageAccountKey": "[listKeys(variables('storageAccountResourceId'), '2023-05-01').keys[0].value]"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+    "containerGroupFqdn": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerGroupName'))).ipAddress.fqdn]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[parameters('storageAccountName')]"
+    },
+    "licenseFileShareName": {
+      "type": "string",
+      "value": "[parameters('licenseFileShareName')]"
+    }
+  }
+}

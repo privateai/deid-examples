@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "limina"
+    },
+    "location": {
+      "value": "<MYREGION eg. eastus>"
+    },
+    "containerGroupName": {
+      "value": "limina-aci"
+    },
+    "containerImage": {
+      "value": "crprivateaiprod.azurecr.io/deid:4.3.0-cpu-text"
+    },
+    "containerName": {
+      "value": "limina-deid"
+    },
+    "cpuCores": {
+      "value": 4
+    },
+    "memoryInGb": {
+      "value": 16
+    },
+    "liminaPort": {
+      "value": 8080
+    },
+    "dnsNameLabel": {
+      "value": "<MYDNS NAME eg. 'limina-aci-eastus'>"
+    },
+    "storageAccountName": {
+      "value": "<MYSTORAGE ACCOUNT NAME>"
+    },
+    "storageAccountSku": {
+      "value": "<MYSTORAGE_SKU eg.Standard_LRS>" 
+    },
+    "licenseFileShareName": {
+      "value": "license"
+    },
+    "licenseMountPath": {
+      "value": "/app/license"
+    },
+    "registryServer": {
+      "value": "crprivateaiprod.azurecr.io"
+    },
+    "registryUsername": {
+      "value": ""
+    },
+    "registryPassword": {
+      "value": ""
+    }
+  }
+}
