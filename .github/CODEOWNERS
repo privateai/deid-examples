@@ -1,0 +1,4 @@
+# CODEOWNERS file
+
+# Will be pinged on any PR for any file that isn't included in the rules below
+* @baronzemm @bryanbellsmith

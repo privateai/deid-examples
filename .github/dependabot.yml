@@ -1,0 +1,67 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/js"
+    open-pull-requests-limit: 100
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Toronto"
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    groups:
+      azure:
+        patterns:
+          - "@azure/*"
+      lint:
+        patterns:
+          - "eslint"
+          - "@eslint/*"
+          - "typescript-eslint"
+          - "globals"
+          - "eslint-*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      testing:
+        patterns:
+          - "jsdom"
+          - "jsdom-*"
+          - "@testing-library/*"
+          - "msw"
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      prettier:
+        patterns:
+          - "prettier"
+          - "prettier-*"
+      tailwind:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "tailwind-*"
+      i18n:
+        patterns:
+          - "i18next"
+          - "react-i18next"
+          - "i18next-*"
+
+  - package-ecosystem: pip
+    directory: "/python"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7        # wait 7 days for all updates
+      semver-major-days: 14  # wait 14 days for major version bumps
+    groups:
+      python-packages:
+        patterns:
+          - "*"
