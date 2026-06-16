@@ -1,4 +1,4 @@
-aiohttp==3.14.0
+aiohttp==3.14.1
 privateai-client==4.2.1
 python-dotenv==1.2.2
 pyxDamerauLevenshtein==1.10.0
