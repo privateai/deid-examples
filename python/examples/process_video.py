@@ -253,6 +253,6 @@ def limina_redact_video(input_path, output_path=None, redact_audio=True):
     return output_path
 
 
-limina_redact_video(r"C:\Users\AaronYemm\Pictures\Camera Roll\WIN_20260625_15_16_09_Pro.mp4")
+limina_redact_video(r"mySampleVideo.mp4")
 
 print("Done")
