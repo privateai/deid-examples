@@ -7,7 +7,8 @@ import requests
 import base64
 import time
 import concurrent.futures
-import json
+
+#Reference implementation for VIDEO redaction. Note this code requires FFPMEG be installed on on the path
 
 url = f"http://localhost:8080/"
 
@@ -239,7 +240,7 @@ def limina_redact_video(input_path, output_path=None, redact_audio=True):
         # --- 2. Redact each frame ---
         redact_frames(frame_paths, redacted_dir)
 
-        # --- 3. Extract and redact audio (if requested) ---
+        # --- 3. Extract and redact audio ---
         audio_input_path = input_path
         if redact_audio:
             audio_input_path = redact_audio_file(work_dir, input_path)
