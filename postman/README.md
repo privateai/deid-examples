@@ -10,7 +10,7 @@ Download the [Limina API Cookbook postman collection](./Limina%20API%20Cookbook.
 
 To use the Community API, [sign up or sign in](https://portal.getlimina.ai/) to the Limina Customer Portal and get a free API key. 
 
-Within Postman, click on the Limina API Cookbook and select the Authorization tab. Paste your Community API key into the Value field, and then try out the examples.\
+Within Postman, click on the Limina API Cookbook and select the Variables tab. Paste your Community API key into the ApiKey field, and then try out the examples.\
 ![Postman API key configuration](../images/postman.png)
 
 ## Additonal Information
