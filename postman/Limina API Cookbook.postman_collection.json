@@ -83,7 +83,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"text\": [\n        \"I’ll need a ticket for tonight for a trip on the seventh to the ninth. I don’t really care what class I’m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It’s 0134879. What’s that? No um it’s not American, it’s Bahraini. Yeah. And the last name- well the last name I’m not sure about. We just have a name field on our passports, it doesn’t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it’s just the remainder. Aw that sucks. Well a hundred and forty bucks isn’t bad. Anyway it’ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"entity_types\": [\n            {\n                \"type\": \"ENABLE\",\n                \"value\": [\n                    \"GDPR\",\n                    \"LOCATION\"\n                ]\n            }\n        ]\n    }\n    \n}",
+          "raw": "{\n    \"text\": [\n        \"I\u2019ll need a ticket for tonight for a trip on the seventh to the ninth. I don\u2019t really care what class I\u2019m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It\u2019s 0134879. What\u2019s that? No um it\u2019s not American, it\u2019s Bahraini. Yeah. And the last name- well the last name I\u2019m not sure about. We just have a name field on our passports, it doesn\u2019t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it\u2019s just the remainder. Aw that sucks. Well a hundred and forty bucks isn\u2019t bad. Anyway it\u2019ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"entity_types\": [\n            {\n                \"type\": \"ENABLE\",\n                \"value\": [\n                    \"GDPR\",\n                    \"LOCATION\"\n                ]\n            }\n        ]\n    }\n    \n}",
           "options": {
             "raw": {
               "language": "json"
@@ -104,7 +104,7 @@
       "response": []
     },
     {
-      "name": "4- Easy Regulation Enablement",
+      "name": "4 - Easy Regulation Enablement",
       "request": {
         "method": "POST",
         "header": [
@@ -115,7 +115,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"text\": [\n        \"I’ll need a ticket for tonight for a trip on the seventh to the ninth. I don’t really care what class I’m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It’s 0134879. What’s that? No um it’s not American, it’s Bahraini. Yeah. And the last name- well the last name I’m not sure about. We just have a name field on our passports, it doesn’t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it’s just the remainder. Aw that sucks. Well a hundred and forty bucks isn’t bad. Anyway it’ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"entity_types\": [\n            {\n                \"type\": \"ENABLE\",\n                \"value\": [\n                    \"GDPR\",\n                    \"LOCATION\"\n                ]\n            }\n        ]\n    }\n    \n}",
+          "raw": "{\n    \"text\": [\n        \"I\u2019ll need a ticket for tonight for a trip on the seventh to the ninth. I don\u2019t really care what class I\u2019m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It\u2019s 0134879. What\u2019s that? No um it\u2019s not American, it\u2019s Bahraini. Yeah. And the last name- well the last name I\u2019m not sure about. We just have a name field on our passports, it doesn\u2019t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it\u2019s just the remainder. Aw that sucks. Well a hundred and forty bucks isn\u2019t bad. Anyway it\u2019ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"entity_types\": [\n            {\n                \"type\": \"ENABLE\",\n                \"value\": [\n                    \"GDPR\",\n                    \"LOCATION\"\n                ]\n            }\n        ]\n    }\n    \n}",
           "options": {
             "raw": {
               "language": "json"
@@ -147,7 +147,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"text\": [\n        \"اسمي مايك يونغ، عمري 45 عامًا، ولدت في طهران\",\n        \"Numele meu este Mike Young, am 45 de ani și m-am născut în Teheran\"\n    ],\n    \"entity_detection\": {\"accuracy\":\"high_multilingual\"},\n    \"link_batch\":\"true\"\n}",
+          "raw": "{\n    \"text\": [\n        \"\u0627\u0633\u0645\u064a \u0645\u0627\u064a\u0643 \u064a\u0648\u0646\u063a\u060c \u0639\u0645\u0631\u064a 45 \u0639\u0627\u0645\u064b\u0627\u060c \u0648\u0644\u062f\u062a \u0641\u064a \u0637\u0647\u0631\u0627\u0646\",\n        \"Numele meu este Mike Young, am 45 de ani \u0219i m-am n\u0103scut \u00een Teheran\"\n    ],\n    \"entity_detection\": {\"accuracy\":\"high_multilingual\"},\n    \"link_batch\":\"true\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -179,7 +179,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"text\": [\n        \"I’ll need a ticket for tonight for a trip on the seventh to the ninth. I don’t really care what class I’m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It’s 0134879. What’s that? No um it’s not American, it’s Bahraini. Yeah. And the last name- well the last name I’m not sure about. We just have a name field on our passports, it doesn’t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it’s just the remainder. Aw that sucks. Well a hundred and forty bucks isn’t bad. Anyway it’ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high_multilingual\",\n        \"return_entity\": false\n    }\n    \n}",
+          "raw": "{\n    \"text\": [\n        \"I\u2019ll need a ticket for tonight for a trip on the seventh to the ninth. I don\u2019t really care what class I\u2019m in, I just need to take a red-eye I guess. Um yeah sure let me get that for you. It\u2019s 0134879. What\u2019s that? No um it\u2019s not American, it\u2019s Bahraini. Yeah. And the last name- well the last name I\u2019m not sure about. We just have a name field on our passports, it doesn\u2019t break it up into first or last or whatever. Hm. Um okay well you could try bin Abdul Saleem. That might work. Yeah, and before that put Maimun. Thanks. Can I just use the credit I have from my last canceled ticket to pay for this flight? Sure, yeah. Okay so it\u2019s just the remainder. Aw that sucks. Well a hundred and forty bucks isn\u2019t bad. Anyway it\u2019ll be um a card. Five six three oh nine seven six oh. Got that? Um eight nine nine one five seven two four. Three-digit code is nine oh one, then expires four twenty.\"\n    ],\n    \"entity_detection\": {\n        \"accuracy\": \"high\",\n        \"return_entity\": false\n    }\n    \n}",
           "options": {
             "raw": {
               "language": "json"
@@ -275,7 +275,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"text\": [\n      \"Hello, my name is May. I am the aunt of Pieter Parker. We live in Toronto, Canada.\"\n    ],\n    \"link_batch\": false,\n    \"entity_detection\": {\n      \"accuracy\": \"high\",\n      \"return_entity\": true\n    },\n    \"processed_text\": {\n      \"type\": \"SYNTHETIC\",\n      \"synthetic_entity_accuracy\": \"standard\",\n      \"preserve_relationships\": true\n    }\n  }",
+          "raw": "{\n    \"text\": [\n      \"Hello, my name is May. I am the aunt of Pieter Parker. We live in Toronto, Canada.\"\n    ],\n    \"link_batch\": false,\n    \"entity_detection\": {\n      \"accuracy\": \"high\",\n      \"return_entity\": true\n    },\n    \"processed_text\": {\n      \"type\": \"SYNTHETIC\",\n      \"synthetic_entity_accuracy\": \"standard\"\n    }\n  }",
           "options": {
             "raw": {
               "language": "json"
@@ -323,13 +323,18 @@
       "response": []
     },
     {
-      "name": "11 - Analyze Text Example",
+      "name": "11 - Analyze Text (Credit Card Validation)",
       "request": {
         "method": "POST",
-        "header": [],
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"text\": [\n    \"Hello John and Jane\"\n  ],\n  \"link_batch\": false,\n  \"entity_detection\": {\n    \"accuracy\": \"high\",\n    \"return_entity\": true\n  }\n}",
+          "raw": "{\n  \"text\": [\n    \"Okay, hang on just a second because I got to get it. Okay, it is 6578-7790-4346-2237. Expiration. 1224.\",\n    \"All right, I'm ready. 800 678-457-7896. Expiration is one. 224.\",\n    \"CC_type: Diners Club International RuPay Visa JCB Amex CCN: 30569309025904 4242424242424242 4222222222222 6172873484776530 378282246310005 CC_CVC: 480 902 182 765 143 CC_Expiredate: 5/28 6/67 12/67 11/29 9/70\"\n  ],\n  \"locale\": \"en-US\",\n  \"entity_detection\": {\n    \"accuracy\": \"high\",\n    \"entity_types\": [\n      {\n        \"type\": \"ENABLE\",\n        \"value\": [\"CREDIT_CARD\"]\n      }\n    ]\n  }\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -344,34 +349,6 @@
           "path": [
             "analyze",
             "text"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "12 - Reidentify Text",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"processed_text\": [\n    \"Hello [NAME_GIVEN_1] and [NAME_GIVEN_2]\"\n  ],\n  \"entities\": [\n    {\n      \"processed_text\": \"[NAME_GIVEN_1]\",\n      \"text\": \"John\"\n    },\n    {\n      \"processed_text\": \"[NAME_GIVEN_2]\",\n      \"text\": \"Jane\"\n    }\n  ],\n  \"reidentify_sensitive_fields\": true,\n  \"project_id\": \"main\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/process/text/reidentify",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "process",
-            "text",
-            "reidentify"
           ]
         }
       },
