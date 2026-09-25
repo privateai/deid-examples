@@ -1,18 +1,18 @@
 # Introduction
 
-This repository contains examples that showcase how to use the Private AI REST API, for both Python and JS. The API allows for PII to be found in text and then replaced with redaction markers or synthetic PII. The system supports over [50 entity types](https://docs.private-ai.com/entities/), such as Credit Card information and Social Security numbers across [50 languages](https://docs.private-ai.com/languages/). The [documentation](https://docs.private-ai.com/introduction) and the [API reference](https://docs.private-ai.com/reference/latest/operation/process_text_v3_process_text_post/) are available from Private AI's website.
+This repository contains examples that showcase how to use the Limina REST API, for both Python and JS. The API allows for PII to be found in text and then replaced with redaction markers or synthetic PII. The system supports over [50 entity types](https://docs.getlimina.ai/entities/supported-entity-types), such as Credit Card information and Social Security numbers across [50 languages](https://docs.getlimina.ai/languages/). The [documentation](https://docs.getlimina.ai/introduction) and the [API reference](https://docs.getlimina.ai/latest/process-text) are available from Limina's website.
 
 ## How to get access
 
-Get a [Community API key here](https://portal.private-ai.com/)
+Get a [Community API key here](https://portal.getlimina.ai/)
 
-For further information & access to the container feel free to [contact us](https://www.private-ai.com/da2t).
+For further information & access to the container feel free to [contact us](https://www.getlimina.ai/en/contact-us).
 
 ## Setup
 
-Private AI's service is primarily delivered via a self-hosted container. Please follow the [setup instructions](https://docs.private-ai.com/installation/) to get started.
+Limina's service is primarily delivered via a self-hosted container. Please follow the [setup instructions](https://docs.getlimina.ai/installation/) to get started.
 
-It is also possible to use the Private AI cloud endpoint located at [https://portal.private-ai.com/](https://portal.private-ai.com/).
+It is also possible to use the Limina Community cloud endpoint via the [Customer Portal](https://portal.getlimina.ai/).
 
 ## What are these examples?
 
