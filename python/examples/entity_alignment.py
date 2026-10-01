@@ -13,7 +13,7 @@ headers = {"Content-Type": "application/json", "x-api-key": os.environ["PRIVATEA
 
 #Simple example that demonstrates the entity alignment concept utilized within the Limina platform product
 #This code sample looks at the detected PII and entity markers, and ensures that markers are aligned upon subsequent calls
-#This code requires that each response be retained in memory and does not retain state.
+#This code requires that each response be retained in memory and does persist state to storage
 
 def align_processed_text(response1, response2):
     """Update response2 entities with processed_text values from matching response1 entities."""
@@ -109,7 +109,7 @@ response1 = makePaiCall_text(input_text)
 response2 = makePaiCall_text(input_text2)
 response2 = align_processed_text(response1, response2)
 
-#TODO: To ensure no drift occurs across markers, all responses will need to be aggregated and continuously concatenated
+#TODO: To ensure no drift occurs across markers, all responses will need to be aggregated and continuously concatenated via additional logic and coding
 
 #Print output
 formatted_str = json.dumps(response1, indent=4)
