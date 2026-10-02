@@ -1,19 +1,24 @@
-import requests
 import json
 import os
-import dotenv
 import re
 from collections import defaultdict, deque
 
+import dotenv
+import requests
+
 dotenv.load_dotenv()
 
-#url = "http://localhost:8080/"
+# url = "http://localhost:8080/"
 url = "https://api.private-ai.com/community/v4/"
-headers = {"Content-Type": "application/json", "x-api-key": os.environ["PRIVATEAI_API_KEY"]}
+headers = {
+    "Content-Type": "application/json",
+    "x-api-key": os.environ["PRIVATEAI_API_KEY"],
+}
 
-#Simple example that demonstrates the entity alignment concept utilized within the Limina platform product
-#This code sample looks at the detected PII and entity markers, and ensures that markers are aligned upon subsequent calls
-#This code requires that each response be retained in memory and does persist state to storage
+# Simple example that demonstrates the entity alignment concept utilized within the Limina platform product
+# This code sample looks at the detected PII and entity markers, and ensures that markers are aligned upon subsequent calls
+# This code requires that each response be retained in memory and does persist state to storage
+
 
 def align_processed_text(response1, response2):
     """Update response2 entities with processed_text values from matching response1 entities."""
@@ -80,13 +85,9 @@ def align_processed_text(response1, response2):
     return response2
 
 
+def redact_text(data):
+    request = {"text": data, "link_batch": True}
 
-def makePaiCall_text(data):
-    request = {
-        "text": data,
-        "link_batch":True        
-    }
-    
     ###----------------------------------------------------------------------------###
     ### PRIVATE AI API CALL
     response = requests.post(f"{url}process/text", json=request, headers=headers)
@@ -98,20 +99,19 @@ def makePaiCall_text(data):
     return data
 
 
-input_text = ["Hi Aaron its Jeff",
-              "Hi jeff its nice to meet you"]
+input_text = ["Hi Aaron its Jeff", "Hi jeff its nice to meet you"]
 
 input_text2 = ["Susan held a meeting with Jeff and Aaron"]
 
 
-response1 = makePaiCall_text(input_text)
+response1 = redact_text(input_text)
 
-response2 = makePaiCall_text(input_text2)
+response2 = redact_text(input_text2)
 response2 = align_processed_text(response1, response2)
 
-#TODO: To ensure no drift occurs across markers, all responses will need to be aggregated and continuously concatenated via additional logic and coding
+# TODO: To ensure no drift occurs across markers, all responses will need to be aggregated and continuously concatenated via additional logic and coding
 
-#Print output
+# Print output
 formatted_str = json.dumps(response1, indent=4)
 print(formatted_str)
 
