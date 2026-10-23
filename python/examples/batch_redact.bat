@@ -1,0 +1,1 @@
+python3 batch_redact.py --host http://localhost:8080 \input \staging \output
